@@ -3,10 +3,64 @@ layout: default
 ---
 
 # About me
-I'm ruycr4ft, a spanish security researcher. I've created some content for HackTheBox and HackMyVM, and I'm looking forward to do more. 
+Hello! My name is Miguel 👋 I am just starting to create CTF, so far I have only created machines for Dockerlabs and HackMyVM.
 
-# About the blog
-Here I'll be posting writeups and CTFs solutions which you can read to learn from me, or to solve the challange with my solution. I'll also be posting security investigations and proof of concepts I create, within the explanation of the vulnerability. 
+# Objetives
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e; /* Fondo oscuro */
+            color: white; /* Color de texto */
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: center;
+            padding: 20px;
+        }
+        .cert {
+            margin: 20px;
+        }
+        .cert img {
+            width: 150px; /* Ajusta el tamaño de la imagen */
+            height: auto;
+        }
+        h2, h3 {
+            margin: 10px 0;
+        }
+        h3 {
+            color: #ccc; /* Color más claro para los subtítulos */
+        }
+    </style>
+</head>
+<body>
 
-# The goal
-The main goal of this, is for me to have stored all my notes in a place where it looks good and I don't have to look around my messy txt notes, but also for you to learn and entretain with my content. Take care!
+<div class="container">
+    <div class="cert">
+        <img src="/assets/images/cpts.avif" alt="CPTS Badge">
+        <h2>CPTS</h2>
+        <h3>Certified Penetration Testing Specialist</h3>
+    </div>
+
+    <div class="cert">
+        <img src="/assets/images/ewpt.png" alt="eWPT Badge">
+        <h2>eWPT</h2>
+        <h3>Web Application Penetration Tester</h3>
+    </div>
+
+    <div class="cert">
+        <img src="/assets/images/cbbh.png" alt="cbbh Badge">
+        <h2>CBBH</h2>
+        <h3>Certified Bug Bounty Hunter</h3>
+    </div>
+</div>
+</body>
+-- -

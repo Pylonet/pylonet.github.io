@@ -1,25 +1,25 @@
 remote_theme: CaptainIRS/hacker-plus-theme
 
-title: ruycr4ft
-author: ruycr4ft
-description: Writeups and Security research
+title: Pylon
+author: Pylon
+description: "| Ethical Hacker | Red Team | CTF creator | Road To CPTS"
 disqus_forum_shortname:
 google_site_verification_content: # The 'content' tag for site verification
 google_analytics: # Your Google Analytics Tracking ID
 
 # Usernames and badges
-htb_badge_no: 1253217
-thm_badge_no: # Go to https://tryhackme.com/profile -> Public Profile -> Get Badge ID
+htb_badge_no: 1560890
+thm_badge_no: 2445229 # Go to https://tryhackme.com/profile -> Public Profile -> Get Badge ID
 show_thm_htb_badges_in_nav: true
-github_username: ruycr4ft
+github_username: pylonet
 gitlab: 
 medium:
-stackoverflow: users/24158262/ruycr4ft
+stackoverflow: 
 hacker_news:
 linkedin: 
 twitch:
 youtube: 
-twitter: ruycr4ft
+twitter: pylonet
 facebook:
 instagram:
 reddit:
