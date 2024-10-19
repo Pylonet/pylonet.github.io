@@ -1,6 +1,6 @@
 ---
 layout: writeup
-category: DOCKERLABS
+category: Dockerlabs
 chall_description: https://dockerlabs.es
 points: 0
 solves: 28427

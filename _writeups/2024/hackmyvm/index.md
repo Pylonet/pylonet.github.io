@@ -1,6 +1,6 @@
 ---
 layout: ctf_overview
-title: HMV
-category: HMV
+title: HackMyVM
+category: HackMyVM
 date: 2024-06-15
 ---

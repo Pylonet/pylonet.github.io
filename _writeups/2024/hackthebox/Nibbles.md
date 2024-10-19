@@ -1,6 +1,6 @@
 ---
 layout: writeup
-category: HTB
+category: HackTheBox
 chall_description: https://app.hackthebox.com/machines/Nibbles
 points: 0
 solves: 28427
