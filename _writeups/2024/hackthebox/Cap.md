@@ -12,6 +12,7 @@ comments: true
 <img src="/assets/images/htb/cap/icon.webp" alt="" width="40%">
 
 # Introduction
+Cap is an easy machine where we will find a web of network analysis where in a section we can download a capture with the extension `.pcap` that opening it with `WireShark` we can find the credentials of the user nathan, and being in the system we can escalate privileges by means of `capabilities` in python.
 
 # Enumeration
 We start with an nmap scan:

