@@ -4,7 +4,7 @@ category: TheHackerLabs
 chall_description: https://thehackerslabs.com/academy/
 points: 0
 solves: 28427
-tags: Linux 
+tags: Linux Wordpress
 date: 2024-10-20
 comments: true
 ---
@@ -12,7 +12,7 @@ comments: true
 <img src="/assets/images/thl/academy/icon.jpg" alt="" width="40%">
 
 # Introduction
-Academy is an easy machine where enumerating a wordpress with wpscan we can get a user and brute force him to get his password where we can access the admin panel where there is a file manager plugin where we can upload a .php with a reverse shell and get access to the system as www-data. In the system runs a cron job where we can abuse it and get root.
+Academy is an easy machine where enumerating a `wordpress` with `wpscan` we can get a user and `brute force` him to get his password where we can access the admin panel where there is a file manager plugin where we can upload a `.php` with a reverse shell and get access to the system as `www-data`. In the system runs a `cron job` where we can abuse it and get root.
 
 # Enumeration
 
