@@ -5,6 +5,15 @@ layout: default
 # About me
 Hello! My name is Miguel 👋 I am just starting to create CTF, so far I have only created machines for [Dockerlabs](https://dockerlabs.es) and [HackMyVM](https://hackmyvm.eu/).
 
+# My Machines
+
+## HackTheBox
+
+| Name   | OS    | STATUS                 |
+|--------|-------|------------------------|
+| Dash   | Linux | Provisionally Accepted |
+| French | Linux | Provisionally Accepted |
+
 # Objetives
 <html>
 <head>
@@ -62,3 +71,4 @@ Hello! My name is Miguel 👋 I am just starting to create CTF, so far I have on
 
 </body>
 </html>
+
