@@ -9,8 +9,15 @@ date: 2024-10-19
 comments: true
 ---
 
+<img src="/assets/images/dockerlabs/chatme/icon.jpeg" alt="" width="40%">
+
+# Information
+ChatMe is a medium machine where we will find a web with a possible `file upload` where only allows to upload `.pyz` files, uploading a reverse shell with that extension we will be able to access as the system user. The system user has `sudo` permissions in the `procmail` binary where with research we will achieve root.
+
 # Enumeration
 We will start with an nmap scan:
+
+![](/assets/images/dockerlabs/chatme/nmap.png)
 
 | PORT | SERVICE                |
 |------|------------------------|
