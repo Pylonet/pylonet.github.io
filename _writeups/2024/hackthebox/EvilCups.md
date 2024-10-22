@@ -4,7 +4,7 @@ category: HackTheBox
 chall_description: https://app.hackthebox.com/machines/EvilCups
 points: 0
 solves: 28427
-tags: Linux Cups
+tags: Linux Cups CVE-2024-47176 CVE-2024-47076 CVE-2024-47175 CVE-2024-47177
 date: 2024-10-22
 comments: true
 ---
