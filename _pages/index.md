@@ -51,9 +51,9 @@ Hello! My name is Miguel 👋 I am just starting to create CTF, so far I have on
 
 <div class="certifications-container">
     <div class="cert">
-        <img src="/assets/images/cpts.avif" alt="CPTS Badge">
-        <h2>CPTS</h2>
-        <h3>Certified Penetration Testing Specialist</h3>
+        <img src="/assets/images/oswa.svg" alt="OSWA Badge">
+        <h2>OSWA</h2>
+        <h3>Offensive Security Web Assessor</h3>
     </div>
 
     <div class="cert">
