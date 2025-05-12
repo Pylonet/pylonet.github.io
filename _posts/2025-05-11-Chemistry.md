@@ -119,3 +119,6 @@ Let's go to port 5000 in our browser:
 ![](/assets/images/hackthebox/chemistry/1.png)
 
 We have the possibility to login or register, in the login probe credentials like `admin:admin` `admin:admin123` and they were not valid, so we will create an account:
+
+> Writing...
+{: .prompt-warning }
