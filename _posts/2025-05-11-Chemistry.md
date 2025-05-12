@@ -1,6 +1,5 @@
 ---
 title: Chemistry HackTheBox
-author: pylon
 date: 2025-05-11 14:10:00 +0800
 categories: [Writeups ,HackTheBox]
 tags: [HackTheBox, Linux, LFI, RCE]

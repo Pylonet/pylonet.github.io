@@ -1,6 +1,5 @@
 ---
 title: Los drivers de NVIDIA no compilan correctamente en Arch Linux
-author: pylon
 date: 2025-05-11 14:10:00 +0800
 categories: [Blog]
 tags: [Arch Linux, Nvidia]
