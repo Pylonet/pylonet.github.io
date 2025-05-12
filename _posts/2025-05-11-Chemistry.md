@@ -3,7 +3,7 @@ title: Chemistry HackTheBox
 author: pylon
 date: 2025-05-11 14:10:00 +0800
 categories: [Writeups ,HackTheBox]
-tags: [HackTheBox, Linux]
+tags: [HackTheBox, Linux, LFI, RCE]
 image: /assets/images/hackthebox/chemistry/logo.png
 description: Chemistry is an easy machine where we will find in the port 5000 a service of chemical tables with the extension .cif where thanks to the CVE-2024-23346 we will achieve a command execution becoming the pink user. In the machine has open locally the port 8080 where it hides an aiohttp service where we will achieve a LFI.
 render_with_liquid: false
