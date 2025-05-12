@@ -572,8 +572,6 @@ We will be able to see that it has `aiohttp/3.9.1` if we look for that version w
 
 Let's exploit it manually! ;)
 
-<img src="/assets/images/hackthebox/chemistry/Roke.gif">
-
 First of all we will do some fuzzing to see if we find more interesting things:
 
 ```bash
@@ -650,4 +648,3 @@ root@chemistry:~#
 
 root! :)
 
-<img src="/assets/images/hackthebox/chemistry/2DV.gif">
