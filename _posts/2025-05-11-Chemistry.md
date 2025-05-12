@@ -648,3 +648,4 @@ root@chemistry:~#
 
 root! :)
 
+![](/assets/images/hackthebox/chemistry/2DV.gif)
