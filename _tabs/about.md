@@ -4,5 +4,8 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+Hello, I'm Pylon, a young student of cybersecurity. I'm focused in web pentesting. In my free time, I dedicate myself to creating CTFs for platforms like Dockerlabs, HackMyVM, and BugBountyLabs. My certificates objetives are:
+
+- BSCP
+- CBBH
+- OSWE
