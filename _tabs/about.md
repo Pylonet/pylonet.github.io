@@ -21,6 +21,10 @@ Hello, I'm Pylon, a young student of cybersecurity. I'm focused in web pentestin
     <img src="/assets/images/about/oswe.png" alt="OSWE" style="width: 100px; height: auto;">
     <div style="font-weight: bold; font-size: 1.2em; margin-top: 10px;">OSWE</div>
   </div>
+  <div style="text-align: center;">
+    <img src="/assets/images/about/ewptx.png" alt="EWPTX" style="width: 100px; height: auto;">
+    <div style="font-weight: bold; font-size: 1.2em; margin-top: 10px;">EWPTX</div>
+  </div>
 </div>
 
 
