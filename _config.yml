@@ -16,7 +16,7 @@ timezone:
 
 title: Pylon # the main title
 
-tagline: Red Team & Pentesting Web & RoadToCBBH # it will display as the subtitle
+tagline: Red Team & Pentesting Web # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   Pylon's blogs
