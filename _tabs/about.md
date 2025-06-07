@@ -8,7 +8,7 @@ order: 4
 
 Hello, I'm Pylon, a young student of cybersecurity. I'm focused in web pentesting. In my free time, I dedicate myself to creating CTFs for platforms like Dockerlabs, HackMyVM, and BugBountyLabs.
 
-<h1 style="text-align: center; border-bottom: 2px solid #000; display: inline-block;">Objetives</h1>
+<h1 style="text-align: center;">Objetives:</h1>
 <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px;">
   <div style="text-align: center;">
     <img src="/assets/images/about/bscp.png" alt="BSCP" style="height: 100px;">
