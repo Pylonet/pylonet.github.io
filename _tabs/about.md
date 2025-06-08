@@ -6,9 +6,9 @@ order: 4
 
 ![](/assets/images/avatar.png)
 
-Hello, I'm Pylon, a young student of cybersecurity. I'm focused in web pentesting. In my free time, I dedicate myself to creating CTFs for platforms like Dockerlabs, HackMyVM, and BugBountyLabs.
+Hola 👋, soy Pylon. Un joven estudiante de ciberseguridad. Me enfoco en Pentesting Web. En mis tiempos libres me dedico a crear CTFs para plataformas como Dockerlabs, HackMyVM y BugBountyLabs.
 
-<h1 style="text-align: center;">Objetives</h1>
+<h1 style="text-align: center;">Objetivos</h1>
 <div style="display: flex; justify-content: center; gap: 40px; margin-top: 20px;">
   <div style="text-align: center;">
     <img src="/assets/images/about/bscp.png" alt="BSCP" style="height: 100px;">
