@@ -428,3 +428,118 @@ const fetchOptions = () => {
 
 Se que toca un momento aburrido pero es lo que hay, toca... REVISIÓN DE CÓDIGO!!
 ![](/assets/images/hackthebox/challenges/flag-command/jVo.gif)
+
+No vamos a ir parte por parte, os voy a poner las zonas importantes para entender este Challenge y resolverlo :):
+
+
+```js
+[...]
+    if (availableOptions[currentStep].includes(currentCommand) || availableOptions['secret'].includes(currentCommand)) {
+        await fetch('/api/monitor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 'command': currentCommand })
+        })
+[...]
+```
+
+Podemos ver que esta enviando una solicitud `POST` con `fetch` a `/api/monitor` con la cabecera `Content-Type: application/json`, vamos a replicarla con `curl` a ver que nos dice:
+
+```bash
+❯ curl -s -X POST 'http://94.237.59.174:46361/api/monitor' -H 'Content-Type: application/json' | jq
+{
+  "message": "400 Bad Request"
+}
+```
+
+Oh... Vemos que nos comenta `Bad Request`. Vamos a seguir leyendo! 
+
+```js
+[...]
+                if(data.message.includes('Game over')) {
+                    playerLost();
+                    fetchingResponse = false;
+                    return;
+                }
+
+                if(data.message.includes('HTB{')) {
+                    playerWon();
+                    fetchingResponse = false;
+
+                    return;
+                }
+[...]
+```
+
+Esta zona es donde me ha llamado mucho ya que vemos 2 condicionales donde:
+1. Si el mensaje incluye `Game Over` ejecuta la función `playerLost()`
+2. Si el mensaje incluye `HTB{` ejecuta la función `playerWon()`
+
+Leyendo esto pienso... Y si pongo en la web `HTB{` ganaré?..:
+
+![](/assets/images/hackthebox/challenges/flag-command/6.png)
+
+![](/assets/images/hackthebox/challenges/flag-command/fA1.gif)
+
+Vamos a seguir leyenedo el código:
+
+```js
+[...]
+const fetchOptions = () => {
+    fetch('/api/options')
+        .then((data) => data.json())
+        .then((res) => {
+            availableOptions = res.allPossibleCommands;
+
+        })
+        .catch(() => {
+            availableOptions = undefined;
+        })
+}
+```
+En las últimas líneas podemos ver esto, esta enviando una petición `GET` al endpoint `/api/options`, vamos a probarlo con `curl`:
+
+```bash
+❯ curl -s -X GET 'http://94.237.59.174:46361//api/options' -H 'Content-Type: application/json' | jq
+{
+  "allPossibleCommands": {
+    "1": [
+      "HEAD NORTH",
+      "HEAD WEST",
+      "HEAD EAST",
+      "HEAD SOUTH"
+    ],
+    "2": [
+      "GO DEEPER INTO THE FOREST",
+      "FOLLOW A MYSTERIOUS PATH",
+      "CLIMB A TREE",
+      "TURN BACK"
+    ],
+    "3": [
+      "EXPLORE A CAVE",
+      "CROSS A RICKETY BRIDGE",
+      "FOLLOW A GLOWING BUTTERFLY",
+      "SET UP CAMP"
+    ],
+    "4": [
+      "ENTER A MAGICAL PORTAL",
+      "SWIM ACROSS A MYSTERIOUS LAKE",
+      "FOLLOW A SINGING SQUIRREL",
+      "BUILD A RAFT AND SAIL DOWNSTREAM"
+    ],
+    "secret": [
+      "Blip-blop, in a pickle with a hiccup! Shmiggity-shmack"
+    ]
+  }
+}
+```
+
+![](/assets/images/hackthebox/challenges/flag-command/3dxZ.gif)
+
+Podemos ver `secret`, vamos a poner el mensaje que nos da en la web, pero antes de ponerlo pondremos `start` para iniciar el juego y ya si poner el mensaje secreto:
+
+![](/assets/images/hackthebox/challenges/flag-command/7.png)
+
+
