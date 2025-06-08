@@ -425,3 +425,6 @@ const fetchOptions = () => {
         })
 }
 ```
+
+Se que toca un momento aburrido pero es lo que hay, toca... REVISIÓN DE CÓDIGO!!
+![](/assets/images/hackthebox/challenges/flag-command/jVo.gif)
