@@ -34,7 +34,7 @@ Así que decidí abrir en las `DevTools` de Firefox el `Debugger` y encontre est
 
 Hmmm, vamos a curiosear `game.js`:
 
-````js
+```js
 import { displayLineInTerminal } from "./main.js";
 import { GAME_LOST, GAME_WON } from "./commands.js";
 
