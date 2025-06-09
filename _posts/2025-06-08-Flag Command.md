@@ -1,5 +1,5 @@
 ---
-title: HTB Challenges (Web): Flag Command
+title: "HTB Challenges (Web): Flag Command"
 date: 2025-06-08 14:10:00 +0800
 categories: [Writeups, HackTheBox, Challenges]
 tags: [HackTheBox, API, JavaScript]
