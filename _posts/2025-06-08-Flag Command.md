@@ -7,6 +7,7 @@ description: Flag Command un challenge con una dificultad Very Easy donde nos en
 render_with_liquid: false
 ---
 
+---
 Vamos a iniciar el Challenge:
 
 ![](/assets/images/hackthebox/challenges/flag-command/1.png)
