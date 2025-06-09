@@ -2,13 +2,14 @@
 title: "HTB Challenges (Web): OnlyHacks"
 date: 2025-06-09 14:10:00 +0800
 categories: [Writeups, HackTheBox]
-tags: [HackTheBox, XSS, JavaScript]
+tags: [HackTheBox, XSS, Session Hijacking]
 description: OnlyHacks un challenge con una dificultad Very Easy, donde encontraremos una aplicación web para buscar tu perfecto amor. Dandole like a algunos perfiles podremos hablarles por chat para conectar con ellos/as. En el chat vemos reflejado nuestro input y a nivel de front-end no vemos ningún tipo de sanitización de nuestro input pudiendo inyectar código HTML (HTML Injection) pudiendolo llevar perfectamente a un XSS donde también será afectada la misma persona del chat pudiendo robarle las cookies de su sesión para inicar como ella y encontrar la flag.
 render_with_liquid: false
 ---
 
 ---
 Vamos a desplegar el Challenge:
+
 ![](/assets/images/hackthebox/challenges/onlyhacks/1.png)
 
 Vamos a ver la web!!
