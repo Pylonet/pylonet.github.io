@@ -428,7 +428,7 @@ const fetchOptions = () => {
 Se que toca un momento aburrido pero es lo que hay, toca... REVISIÓN DE CÓDIGO!!
 ![](/assets/images/hackthebox/challenges/flag-command/jVo.gif)
 
-No vamos a ir parte por parte, os voy a poner las zonas importantes para entender este Challenge y resolverlo :):
+No vamos a ir parte por parte, os voy a poner las zonas importantes para entender este Challenge y resolverlo 🙂:
 
 
 ```js
