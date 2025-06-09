@@ -8,6 +8,10 @@ description: Chemistry is an easy machine where we will find in the port 5000 a 
 render_with_liquid: false
 ---
 
+> Este writeup esta en inglés, se traducirá a futuro 😉.
+{: .prompt-info }
+
+
 # Enumeration
 
 We start with an nmap scan:
