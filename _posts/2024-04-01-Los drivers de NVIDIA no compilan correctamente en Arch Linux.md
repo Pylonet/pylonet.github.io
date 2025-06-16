@@ -56,3 +56,5 @@ Ahora buscaremos la versión de kernel que tuvimos antes y le daremos a Enter y 
 
 > **RECUERDA**: Tendrás que desinstalar linux-headers o linux-zen-headers dependiendo de cual estés usando e instalarlos también con el mismo comando downgrade pero buscando linux-zen-headers.
 {: .prompt-warning }
+
+---
