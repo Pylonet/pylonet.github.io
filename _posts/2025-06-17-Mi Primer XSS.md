@@ -9,15 +9,19 @@ render_with_liquid: false
 
 Hola buenas tardes a todos!! 👋☕️ Hoy venga a contaros como encontré mi primer Reflected XSS en un programa de Bug Bounty. Este bug no espero que sea recompensado económicamente, ya que se trata de la plataforma ***** donde gran parte son VDP. 
 
+![](/assets/images/blog/mi-primer-xss/8z0C.gif)
+
 # ¿Qué es un Reflected XSS?
 
 Un Reflected XSS es cuando nuestro contenido malicioso *(Por ejemplo: `<script>alert(1)</script>`* enviado por el navegador web se refleja fuera del servidor, como un mensaje de error, un resultado de búsqueda o cualquier otra respuesta donde nuestra entrada de usuario se refleje.
 
-*Información sacada de [OWASP](https://owasp.org/www-community/attacks/xss/)*
+- *Información sacada de [OWASP](https://owasp.org/www-community/attacks/xss/)*
 
 # Proof Of Content
 
 Vamos a ver como encontre el XSS!!
+
+![](/assets/images/blog/mi-primer-xss/gCn.gif)
 
 En la web vi un campo de búsqueda donde vi que se tramitaba por `POST`:
 ![](/assets/images/blog/mi-primer-xss/1.png)
@@ -58,3 +62,5 @@ Vemos que lo hemos podido llevar a un Reflected XSS!! Por probar probe en mandar
 # Conclusión
 
 Se que no es gran cosa pero para mi personalmente es un gran avance para mi aprendizaje en este mundillo de Bug Bounty. Así que espero que os haya gustado mi primer Reflected XSS y nos vemos en la próxima!! 👋☕
+
+---
