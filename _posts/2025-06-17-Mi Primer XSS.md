@@ -13,7 +13,7 @@ Hola buenas tardes a todos!! 👋☕️ Hoy venga a contaros como encontré mi p
 
 # ¿Qué es un Reflected XSS?
 
-Un Reflected XSS es cuando nuestro contenido malicioso *(Por ejemplo: `<script>alert(1)</script>`* enviado por el navegador web se refleja fuera del servidor, como un mensaje de error, un resultado de búsqueda o cualquier otra respuesta donde nuestra entrada de usuario se refleje.
+Un Reflected XSS es cuando nuestro contenido malicioso *(Por ejemplo: `<script>alert(1)</script>`)* enviado por el navegador web se refleja fuera del servidor, como un mensaje de error, un resultado de búsqueda o cualquier otra respuesta donde nuestra entrada de usuario se refleje.
 
 - *Información sacada de [OWASP](https://owasp.org/www-community/attacks/xss/)*
 
