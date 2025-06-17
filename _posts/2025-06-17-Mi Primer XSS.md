@@ -7,7 +7,7 @@ description:
 render_with_liquid: false
 ---
 
-Hola buenas tardes a todos!! 👋☕️ Hoy venga a contaros como encontré mi primer Reflected XSS en un programa de Bug Bounty. Este bug no espero que sea recompensado económicamente, personalmente me vale para mi aprendizaje 🙂.
+Hola buenas tardes a todos!! 👋☕️ Hoy venga a contaros como encontré mi primer Reflected XSS en un programa de Bug Bounty. Este bug no espero que sea recompensado económicamente, personalmente me vale para mi aprendizaje 🙂
 
 ![](/assets/images/blog/mi-primer-xss/8z0C.gif)
 
