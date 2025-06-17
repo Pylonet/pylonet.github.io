@@ -63,5 +63,6 @@ Vemos que lo hemos podido llevar a un Reflected XSS!! Por probar probe en mandar
 
 Se que no es gran cosa pero para mi personalmente es un gran avance para mi aprendizaje en este mundillo de Bug Bounty. Así que espero que os haya gustado mi primer Reflected XSS y nos vemos en la próxima!! 👋☕
 
-*Recordar vuestro cafecito diario jeje ☕*
+* Recordar vuestro cafecito diario jeje ☕ *
+
 ---
