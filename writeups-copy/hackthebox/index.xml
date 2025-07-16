@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HACKTHEBOX on pylon</title>
+    <link>http://localhost:1313/writeups-copy/hackthebox/</link>
+    <description>Recent content in HACKTHEBOX on pylon</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>Copyright (c) 2020-2025 Hyas</copyright>
+    <lastBuildDate>Thu, 07 Sep 2023 16:04:48 +0200</lastBuildDate>
+    <atom:link href="http://localhost:1313/writeups-copy/hackthebox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Cap</title>
+      <link>http://localhost:1313/writeups-copy/hackthebox/cap/</link>
+      <pubDate>Thu, 07 Sep 2023 16:04:48 +0200</pubDate>
+      <guid>http://localhost:1313/writeups-copy/hackthebox/cap/</guid>
+      <description>Enumeration Comenzaremos con un escaneo nmap:&#xA;# Nmap 7.94SVN scan initiated Sun Aug 18 00:54:24 2024 as: nmap -p- --open -sCVS -vvv -n -Pn -oN target 10.</description>
+    </item>
+  </channel>
+</rss>

